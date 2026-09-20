@@ -2,7 +2,7 @@ name: MAUI iOS Build
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
   workflow_dispatch:
 
 jobs:
@@ -22,7 +22,7 @@ jobs:
           xcode-version: latest-stable
 
       - name: Install MAUI workload
-        run: dotnet workload install maui-ios
+        run: dotnet workload install maui
 
       - name: Build app
         run: >
@@ -39,12 +39,12 @@ jobs:
 
       - name: Package as IPA
         run: |
-          APP=$(find . -name "*.app" -type d | head -n 1)
+          APP=$(find ./bin -name "*.app" -type d | head -n 1)
           mkdir -p Payload
           cp -R "$APP" Payload/
-          zip -qr MyApp.ipa Payload
+          zip -qr SunshineTailwindsWaitList.ipa Payload
 
       - uses: actions/upload-artifact@v4
         with:
           name: ipa
-          path: MyApp.ipa
+          path: SunshineTailwindsWaitList.ipa
