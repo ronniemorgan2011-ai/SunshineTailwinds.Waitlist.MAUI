@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="SunshineTailwinds.Waitlist.MAUI.MainPage">
+
+    <Grid
+        Padding="15"
+        ColumnDefinitions="350,700,320">
+
+        <!-- ADD GUEST -->
+
+        <Border
+            Grid.Column="0"
+            Stroke="Gray"
+            Padding="15">
+
+            <VerticalStackLayout Spacing="10">
+
+                <Label
+                    Text="Add Guest"
+                    FontSize="24"
+                    FontAttributes="Bold"/>
+
+                <Entry
+                    x:Name="txtGuestName"
+                    Placeholder="Guest Name"/>
+
+                <Entry
+                    x:Name="txtAdults"
+                    Placeholder="Adults"
+                    Keyboard="Numeric"/>
+
+                <Entry
+                    x:Name="txtChildren"
+                    Placeholder="Children"
+                    Keyboard="Numeric"/>
+                <HorizontalStackLayout>
+                    <CheckBox
+                        x:Name="chkHighChair" />
+                            <Label
+                                Text="High Chair Needed"
+                                    VerticalOptions="Center" />
+                </HorizontalStackLayout>
+
+                <Button
+                    Text="Add Guest"
+                    Clicked="AddGuest_Clicked"/>
+
+            </VerticalStackLayout>
+
+        </Border>
+
+        <!-- WAITLIST -->
+
+        <Border
+            Grid.Column="1"
+            Stroke="Gray"
+            Padding="15"
+            Margin="10,0">
+
+            <VerticalStackLayout>
+
+                <Label
+                    Text="Active Waitlist"
+                    FontSize="24"
+                    FontAttributes="Bold"/>
+
+                <Grid
+                    ColumnDefinitions="2*,1*,1*,1*,1*,1*"
+                    Padding="5">
+
+                    <Label Grid.Column="0" Text="Guest" FontAttributes="Bold"/>
+                    <Label Grid.Column="1" Text="Adults" FontAttributes="Bold"/>
+                    <Label Grid.Column="2" Text="Kids" FontAttributes="Bold"/>
+                    <Label Grid.Column="3" Text="HC" FontAttributes="Bold"/>
+                    <Label Grid.Column="4" Text="Status" FontAttributes="Bold"/>
+                    <Label Grid.Column="5" Text="Table" FontAttributes="Bold"/>
+
+                </Grid>
+
+                <BoxView
+                    HeightRequest="1"
+                    Color="Gray"
+                    Margin="0,0,0,5"/>
+
+                <CollectionView
+                    ItemsSource="{Binding Guests}"
+                    SelectionMode="Single"
+                    SelectedItem="{Binding SelectedGuest}">
+
+                    <CollectionView.ItemTemplate>
+
+                        <DataTemplate>
+
+                            <Grid
+                                ColumnDefinitions="2*,1*,1*,1*,1*,1*"
+                                Padding="5">
+
+                                <Label Grid.Column="0" Text="{Binding GuestName}"/>
+                                <Label Grid.Column="1" Text="{Binding Adults}"/>
+                                <Label Grid.Column="2" Text="{Binding Children}"/>
+                                <Label Grid.Column="3" Text="{Binding HighChairDisplay}"/>
+                                <Label Grid.Column="4" Text="{Binding Status}"/>
+                                <Label Grid.Column="5" Text="{Binding TableNumber}"/>
+
+                            </Grid>
+
+                        </DataTemplate>
+
+                    </CollectionView.ItemTemplate>
+
+                </CollectionView>
+
+            </VerticalStackLayout>
+
+        </Border>
+
+        <!-- DASHBOARD -->
+
+        <Border
+            Grid.Column="2"
+            Stroke="Gray"
+            Padding="15">
+
+            <VerticalStackLayout Spacing="12">
+
+                <Label
+                    Text="Dashboard"
+                    FontSize="24"
+                    FontAttributes="Bold"/>
+
+                <Label Text="{Binding WaitingCount, StringFormat='Waiting: {0}'}"/>
+                <Label Text="{Binding SeatedCount, StringFormat='Seated: {0}'}"/>
+                <Label Text="{Binding GuestCount, StringFormat='Guests: {0}'}"/>
+                <Label Text="{Binding OccupiedCount, StringFormat='Occupied: {0}'}"/>
+                <Label Text="{Binding CurrentWaitMinutes, StringFormat='Selected Guest Wait: {0} Minutes'}"/>
+                <Label Text="{Binding LongestWaitMinutes, StringFormat='Longest Wait: {0} Minutes'}"/>
+
+                <BoxView
+                    HeightRequest="1"
+                    Color="Gray"/>
+
+                <Label
+                    Text="Selected Guest"
+                    FontSize="18"
+                    FontAttributes="Bold"/>
+
+                <Label
+                    Text="{Binding SelectedGuest.GuestName}"
+                    FontSize="18"/>
+
+                <Picker
+                    Title="Select Table"
+                    ItemsSource="{Binding Tables}"
+                    SelectedItem="{Binding SelectedTable}"
+                    ItemDisplayBinding="{Binding Name}" />
+
+                <Button
+                    Text="Assign Table"
+                    Clicked="AssignTable_Clicked"/>
+
+                <BoxView
+                    HeightRequest="1"
+                    Color="Gray"/>
+
+                <Button
+                    Text="Seat Guest"
+                    Clicked="SeatGuest_Clicked"/>
+
+                <Button
+                    Text="Orders In"
+                    Clicked="OrdersIn_Clicked"/>
+
+                <Button
+                    Text="Close Party"
+                    Clicked="CloseParty_Clicked"/>
+
+                <Button
+                    Text="Remove Guest"
+                    Clicked="RemoveGuest_Clicked"/>
+
+            </VerticalStackLayout>
+
+        </Border>
+
+    </Grid>
+
+</ContentPage>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="SunshineTailwinds.Waitlist.MAUI.ManageTablesPage"
+    Title="Manage Tables">
+
+    <Grid
+        Padding="15"
+        ColumnDefinitions="350,450">
+
+        <!-- LEFT PANEL -->
+
+        <Border
+            Grid.Column="0"
+            Stroke="Gray"
+            Padding="15">
+
+            <VerticalStackLayout
+                Spacing="15">
+
+                <Label
+                    Text="Manage Tables"
+                    FontSize="24"
+                    FontAttributes="Bold"/>
+
+                <BoxView
+                    HeightRequest="1"
+                    Color="Gray"/>
+
+                <Label
+                    x:Name="lblTableCount"
+                    Text="Current Tables (0)"
+                    FontAttributes="Bold"/>
+
+                <Label
+                    Text="Select Table"
+                    FontAttributes="Bold"/>
+
+                <Picker
+                    x:Name="TablePicker"
+                    Title="Choose Table"
+                    ItemDisplayBinding="{Binding Name}" />
+
+                <HorizontalStackLayout>
+
+                    <CheckBox
+                        x:Name="chkShowDisabled"
+                        CheckedChanged="ShowDisabled_Changed"/>
+
+                    <Label
+                        Text="Show Disabled Tables"
+                        VerticalOptions="Center"/>
+
+                </HorizontalStackLayout>
+
+                <Button
+                    Text="Disable Selected Table"
+                    Clicked="DisableTable_Clicked"/>
+
+                <Button
+                    Text="Enable Selected Table"
+                    Clicked="EnableTable_Clicked"/>
+
+                <BoxView
+                    HeightRequest="1"
+                    Color="Gray"/>
+
+                <Label
+                    Text="Rename Selected Table"
+                    FontAttributes="Bold"/>
+
+                <Entry
+                    x:Name="txtRenameTable"
+                    Placeholder="New Table Name"/>
+
+                <Button
+                    Text="Rename Table"
+                    Clicked="RenameTable_Clicked"/>
+
+                <BoxView
+                    HeightRequest="1"
+                    Color="Gray"/>
+
+                <Label
+                    Text="Add New Table"
+                    FontAttributes="Bold"/>
+
+                <Entry
+                    x:Name="txtTableName"
+                    Placeholder="Table Name"/>
+
+                <Button
+                    Text="Add Table"
+                    Clicked="AddTable_Clicked"/>
+
+            </VerticalStackLayout>
+
+        </Border>
+
+        <!-- RIGHT PANEL -->
+
+        <Border
+            Grid.Column="1"
+            Stroke="Gray"
+            Padding="15"
+            Margin="10,0,0,0">
+
+            <ScrollView>
+
+                <Label
+                    x:Name="lblActiveTables"
+                    FontSize="16"
+                    LineBreakMode="WordWrap"/>
+
+            </ScrollView>
+
+        </Border>
+
+    </Grid>
+
+</ContentPage>
