@@ -22,7 +22,7 @@ jobs:
           xcode-version: latest-stable
 
       - name: Install MAUI workload
-        run: dotnet workload install maui-ios
+        run: dotnet workload install maui
 
       - name: Build app
         run: >
