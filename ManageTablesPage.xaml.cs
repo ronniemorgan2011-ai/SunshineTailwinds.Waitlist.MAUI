@@ -34,13 +34,27 @@ public partial class ManageTablesPage : ContentPage
 
         TablePicker.ItemsSource = tables;
 
-        lblActiveTables.Text =
-            string.Join(
-                "   ",
-                tables.Select(t =>
-                    t.IsActive
-                        ? t.Name
-                        : $"{t.Name} (Disabled)"));
+        TablesContainer.Children.Clear();
+
+        foreach (var table in tables)
+        {
+            var button = new Button
+            {
+                Text = table.Name,
+                WidthRequest = 75,
+                HeightRequest = 50,
+                Margin = 4,
+                BorderWidth = 1,
+                CornerRadius = 8
+            };
+
+            button.Clicked += (s, e) =>
+            {
+                TablePicker.SelectedItem = table;
+            };
+
+            TablesContainer.Children.Add(button);
+        }
     }
 
     private void ShowDisabled_Changed(

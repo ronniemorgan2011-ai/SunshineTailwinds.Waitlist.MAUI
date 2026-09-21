@@ -6,11 +6,14 @@
     x:Class="SunshineTailwinds.Waitlist.MAUI.ManageTablesPage"
     Title="Manage Tables">
 
-    <Grid
-        Padding="15"
-        ColumnDefinitions="350,450">
+    <ScrollView
+        Orientation="Both">
 
-        <!-- LEFT PANEL -->
+            <Grid
+            Padding="15"
+            ColumnDefinitions="350,450">
+
+                <!-- LEFT PANEL -->
 
         <Border
             Grid.Column="0"
@@ -109,15 +112,19 @@
 
             <ScrollView>
 
-                <Label
-                    x:Name="lblActiveTables"
-                    FontSize="16"
-                    LineBreakMode="WordWrap"/>
+                <FlexLayout
+                    x:Name="TablesContainer"
+                    Wrap="Wrap"
+                    Direction="Row"
+                    JustifyContent="Start"
+                    AlignItems="Start" />
 
             </ScrollView>
 
         </Border>
 
     </Grid>
+
+  </ScrollView>
 
 </ContentPage>

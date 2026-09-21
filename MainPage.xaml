@@ -5,186 +5,231 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="SunshineTailwinds.Waitlist.MAUI.MainPage">
 
-    <Grid
-        Padding="15"
-        ColumnDefinitions="350,700,320">
+    <ScrollView
+        Orientation="Both">
 
-        <!-- ADD GUEST -->
+        <Grid
+            Padding="15"
+            ColumnDefinitions="350,700,320">
 
-        <Border
+            <!-- ADD GUEST -->
+
+            <Border
             Grid.Column="0"
             Stroke="Gray"
             Padding="15">
 
-            <VerticalStackLayout Spacing="10">
+                <VerticalStackLayout Spacing="10">
 
-                <Label
+                    <Label
                     Text="Add Guest"
                     FontSize="24"
                     FontAttributes="Bold"/>
 
-                <Entry
+                    <Entry
                     x:Name="txtGuestName"
                     Placeholder="Guest Name"/>
 
-                <Entry
+                    <Entry
                     x:Name="txtAdults"
                     Placeholder="Adults"
                     Keyboard="Numeric"/>
 
-                <Entry
+                    <Entry
                     x:Name="txtChildren"
                     Placeholder="Children"
                     Keyboard="Numeric"/>
-                <HorizontalStackLayout>
-                    <CheckBox
+                    <HorizontalStackLayout>
+                        <CheckBox
                         x:Name="chkHighChair" />
-                            <Label
+                        <Label
                                 Text="High Chair Needed"
                                     VerticalOptions="Center" />
-                </HorizontalStackLayout>
+                    </HorizontalStackLayout>
 
-                <Button
+                    <Button
                     Text="Add Guest"
                     Clicked="AddGuest_Clicked"/>
 
-            </VerticalStackLayout>
+                </VerticalStackLayout>
 
-        </Border>
+            </Border>
 
-        <!-- WAITLIST -->
+            <!-- WAITLIST -->
 
-        <Border
+            <Border
             Grid.Column="1"
             Stroke="Gray"
             Padding="15"
             Margin="10,0">
 
-            <VerticalStackLayout>
+                <VerticalStackLayout>
 
-                <Label
+                    <Label
                     Text="Active Waitlist"
                     FontSize="24"
                     FontAttributes="Bold"/>
 
-                <Grid
+                    <Grid
                     ColumnDefinitions="2*,1*,1*,1*,1*,1*"
-                    Padding="5">
+                    Padding="5"
+                    BackgroundColor="{Binding RowColor}">
 
-                    <Label Grid.Column="0" Text="Guest" FontAttributes="Bold"/>
-                    <Label Grid.Column="1" Text="Adults" FontAttributes="Bold"/>
-                    <Label Grid.Column="2" Text="Kids" FontAttributes="Bold"/>
-                    <Label Grid.Column="3" Text="HC" FontAttributes="Bold"/>
-                    <Label Grid.Column="4" Text="Status" FontAttributes="Bold"/>
-                    <Label Grid.Column="5" Text="Table" FontAttributes="Bold"/>
+                        <Label Grid.Column="0" Text="Guest" FontAttributes="Bold" FontSize="16"/>
+                        <Label Grid.Column="1" Text="Adults" FontAttributes="Bold" FontSize="16"/>
+                        <Label Grid.Column="2" Text="Kids" FontAttributes="Bold" FontSize="16"/>
+                        <Label Grid.Column="3" Text="HC" FontAttributes="Bold" FontSize="16"/>
+                        <Label Grid.Column="4" Text="Status" FontAttributes="Bold" FontSize="16"/>
+                        <Label Grid.Column="5" Text="Table" FontAttributes="Bold" FontSize="16"/>
 
-                </Grid>
+                    </Grid>
 
-                <BoxView
+                    <BoxView
                     HeightRequest="1"
                     Color="Gray"
                     Margin="0,0,0,5"/>
 
-                <CollectionView
+                    <CollectionView
                     ItemsSource="{Binding Guests}"
                     SelectionMode="Single"
                     SelectedItem="{Binding SelectedGuest}">
 
-                    <CollectionView.ItemTemplate>
+                        <CollectionView.ItemTemplate>
 
-                        <DataTemplate>
+                            <DataTemplate>
 
-                            <Grid
-                                ColumnDefinitions="2*,1*,1*,1*,1*,1*"
-                                Padding="5">
+                                <Grid
+            ColumnDefinitions="2*,1*,1*,1*,1*,1*"
+            Padding="5">
 
-                                <Label Grid.Column="0" Text="{Binding GuestName}"/>
-                                <Label Grid.Column="1" Text="{Binding Adults}"/>
-                                <Label Grid.Column="2" Text="{Binding Children}"/>
-                                <Label Grid.Column="3" Text="{Binding HighChairDisplay}"/>
-                                <Label Grid.Column="4" Text="{Binding Status}"/>
-                                <Label Grid.Column="5" Text="{Binding TableNumber}"/>
+                                    <Label
+                Grid.Column="0"
+                Text="{Binding GuestName}"
+                FontSize="16" />
 
-                            </Grid>
+                                    <Label
+                Grid.Column="1"
+                Text="{Binding Adults}"
+                FontSize="16" />
+                                    <Label
+                Grid.Column="2"
+                Text="{Binding Children}"
+                FontSize="16" />
+                                    <Label
+                Grid.Column="3"
+                Text="{Binding HighChairDisplay}"
+                FontSize="16" />
 
-                        </DataTemplate>
+                                    <Border
+                Grid.Column="4"
+                BackgroundColor="{Binding StatusColor}"
+                StrokeThickness="0"
+                Padding="4">
 
-                    </CollectionView.ItemTemplate>
+                                        <Label
+                    Text="{Binding Status}"
+                    TextColor="Black"
+                    FontAttributes="Bold"
+                    FontSize="16" />
 
-                </CollectionView>
+                                    </Border>
 
-            </VerticalStackLayout>
+                                    <Border
+                Grid.Column="5"
+                BackgroundColor="{Binding StatusColor}"
+                StrokeThickness="0"
+                Padding="4">
 
-        </Border>
+                                        <Label
+                    Text="{Binding TableNumber}"
+                    TextColor="Black"
+                    FontAttributes="Bold"
+                    FontSize="16" />
 
-        <!-- DASHBOARD -->
+                                    </Border>
 
-        <Border
+                                </Grid>
+
+                            </DataTemplate>
+
+                        </CollectionView.ItemTemplate>
+
+                    </CollectionView>
+
+                </VerticalStackLayout>
+
+            </Border>
+
+            <!-- DASHBOARD -->
+
+            <Border
             Grid.Column="2"
             Stroke="Gray"
             Padding="15">
 
-            <VerticalStackLayout Spacing="12">
+                <VerticalStackLayout Spacing="12">
 
-                <Label
+                    <Label
                     Text="Dashboard"
                     FontSize="24"
                     FontAttributes="Bold"/>
 
-                <Label Text="{Binding WaitingCount, StringFormat='Waiting: {0}'}"/>
-                <Label Text="{Binding SeatedCount, StringFormat='Seated: {0}'}"/>
-                <Label Text="{Binding GuestCount, StringFormat='Guests: {0}'}"/>
-                <Label Text="{Binding OccupiedCount, StringFormat='Occupied: {0}'}"/>
-                <Label Text="{Binding CurrentWaitMinutes, StringFormat='Selected Guest Wait: {0} Minutes'}"/>
-                <Label Text="{Binding LongestWaitMinutes, StringFormat='Longest Wait: {0} Minutes'}"/>
+                    <Label Text="{Binding WaitingCount, StringFormat='Waiting: {0}'}"/>
+                    <Label Text="{Binding SeatedCount, StringFormat='Seated: {0}'}"/>
+                    <Label Text="{Binding GuestCount, StringFormat='Guests: {0}'}"/>
+                    <Label Text="{Binding OccupiedCount, StringFormat='Occupied: {0}'}"/>
+                    <Label Text="{Binding CurrentWaitMinutes, StringFormat='Selected Guest Wait: {0} Minutes'}"/>
+                    <Label Text="{Binding LongestWaitMinutes, StringFormat='Longest Wait: {0} Minutes'}"/>
 
-                <BoxView
+                    <BoxView
                     HeightRequest="1"
                     Color="Gray"/>
 
-                <Label
+                    <Label
                     Text="Selected Guest"
                     FontSize="18"
                     FontAttributes="Bold"/>
 
-                <Label
+                    <Label
                     Text="{Binding SelectedGuest.GuestName}"
                     FontSize="18"/>
 
-                <Picker
+                    <Picker
                     Title="Select Table"
                     ItemsSource="{Binding Tables}"
                     SelectedItem="{Binding SelectedTable}"
                     ItemDisplayBinding="{Binding Name}" />
 
-                <Button
+                    <Button
                     Text="Assign Table"
                     Clicked="AssignTable_Clicked"/>
 
-                <BoxView
+                    <BoxView
                     HeightRequest="1"
                     Color="Gray"/>
 
-                <Button
+                    <Button
                     Text="Seat Guest"
                     Clicked="SeatGuest_Clicked"/>
 
-                <Button
+                    <Button
                     Text="Orders In"
                     Clicked="OrdersIn_Clicked"/>
 
-                <Button
+                    <Button
                     Text="Close Party"
                     Clicked="CloseParty_Clicked"/>
 
-                <Button
+                    <Button
                     Text="Remove Guest"
                     Clicked="RemoveGuest_Clicked"/>
 
-            </VerticalStackLayout>
+                </VerticalStackLayout>
 
-        </Border>
+            </Border>
 
-    </Grid>
+        </Grid>
+
+    </ScrollView>
 
 </ContentPage>

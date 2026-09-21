@@ -1,4 +1,5 @@
 ﻿using SQLite;
+using Microsoft.Maui.Graphics;
 
 namespace SunshineTailwinds.Waitlist.MAUI.Models;
 
@@ -35,7 +36,17 @@ public class Guest
                 .TotalMinutes;
         }
     }
+
     [Ignore]
     public string HighChairDisplay =>
         HighChairRequired ? "✓" : "";
+
+    [Ignore]
+    public Color StatusColor =>
+     Status switch
+     {
+         "Seated" => Color.FromArgb("#FFE082"),
+         "Orders In" => Color.FromArgb("#F48FB1"),
+         _ => Colors.Transparent
+     };
 }
