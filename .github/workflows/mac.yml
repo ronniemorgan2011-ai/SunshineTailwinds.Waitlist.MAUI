@@ -1,0 +1,47 @@
+name: MAUI Mac Build
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Select Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Install MAUI workload
+        run: dotnet workload install maui
+
+      - name: Build Mac app (Intel)
+        run: >
+          dotnet build SunshineTailwinds.Waitlist.MAUI.csproj
+          -f net10.0-maccatalyst
+          -c Release
+          -p:RuntimeIdentifier=maccatalyst-x64
+          -p:EnableCodeSigning=false
+
+      - name: Find the .app folder
+        run: find ./bin -name "*.app" -type d
+
+      - name: Sign ad-hoc and zip
+        run: |
+          APP=$(find ./bin -name "*.app" -type d | head -n 1)
+          codesign --force --deep --sign - "$APP"
+          ditto -c -k --keepParent "$APP" SunshineTailwinds-mac.zip
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mac-app
+          path: SunshineTailwinds-mac.zip
