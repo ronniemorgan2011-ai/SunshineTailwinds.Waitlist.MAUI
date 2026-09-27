@@ -177,4 +177,11 @@ public class DatabaseService
     {
         _database.DeleteAll<Guest>();
     }
+
+    public void ClearGuests()
+    {
+        _database.DeleteAll<Guest>();
+    }
+
+
 }

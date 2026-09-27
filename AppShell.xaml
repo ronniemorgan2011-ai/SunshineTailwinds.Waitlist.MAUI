@@ -17,4 +17,9 @@
         ContentTemplate="{DataTemplate local:ManageTablesPage}"
         Route="ManageTablesPage" />
 
+    <ShellContent
+        Title="Dashboard"
+        ContentTemplate="{DataTemplate local:DashboardPage}"
+        Route="DashboardPage" />
+
 </Shell>

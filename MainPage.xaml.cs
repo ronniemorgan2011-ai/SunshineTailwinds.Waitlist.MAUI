@@ -106,4 +106,21 @@ public partial class MainPage : ContentPage
 
         RefreshBindings();
     }
+
+    private async void ClearGuests_Clicked(
+    object sender,
+    EventArgs e)
+    {
+        bool answer =
+            await DisplayAlert(
+                "Clear All Guests",
+                "Are you sure you want to remove ALL guests from the waitlist?",
+                "Yes",
+                "No");
+
+        if (!answer)
+            return;
+
+        _viewModel.ClearGuests();
+    }
 }

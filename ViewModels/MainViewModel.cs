@@ -208,4 +208,11 @@ public class MainViewModel : INotifyPropertyChanged
 
         LoadGuests();
     }
+
+    public void ClearGuests()
+    {
+        _database.ClearGuests();
+
+        LoadGuests();
+    }
 }
