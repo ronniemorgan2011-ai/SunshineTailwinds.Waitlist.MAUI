@@ -52,21 +52,22 @@
                     </HorizontalStackLayout>
 
                     <Button
-            Text="Add Guest"
-            Clicked="AddGuest_Clicked"/>
+                        HeightRequest="55"
+                        Text="Add Guest"
+                        Clicked="AddGuest_Clicked"/>
 
                     <BoxView
-            HeightRequest="1"
-            Color="Gray"/>
+                        HeightRequest="1"
+                        Color="Gray"/>
 
                     <Label
-            Text="Guest Actions"
-            FontSize="18"
-            FontAttributes="Bold"/>
+                        Text="Guest Actions"
+                        FontSize="18"
+                        FontAttributes="Bold"/>
 
                     <Label
                         Text="Selected Guest"
-                        FontSize="18"
+                        FontSize="16"
                         FontAttributes="Bold"/>
 
                     <Label
@@ -84,28 +85,34 @@
 
 
                     <Button
-            Text="Assign Table"
-            Clicked="AssignTable_Clicked"/>
+                        HeightRequest="55"
+                        Text="Assign Table"
+                        Clicked="AssignTable_Clicked"/>
 
                     <Button
-            Text="Seat Guest"
-            Clicked="SeatGuest_Clicked"/>
+                        HeightRequest="55"
+                        Text="Seat Guest"
+                        Clicked="SeatGuest_Clicked"/>
 
                     <Button
-            Text="Orders In"
-            Clicked="OrdersIn_Clicked"/>
+                        HeightRequest="55"
+                        Text="Orders In"
+                        Clicked="OrdersIn_Clicked"/>
 
                     <Button
-            Text="Close Party"
-            Clicked="CloseParty_Clicked"/>
+                        HeightRequest="55"
+                        Text="Close Party"
+                        Clicked="CloseParty_Clicked"/>
 
                     <Button
-            Text="Remove Guest"
-            Clicked="RemoveGuest_Clicked"/>
+                        HeightRequest="55"
+                        Text="Remove Guest"
+                        Clicked="RemoveGuest_Clicked"/>
 
                     <Button
-                Text="Clear All Guests"
-                Clicked="ClearGuests_Clicked"/>
+                        HeightRequest="55"
+                        Text="Clear All Guests"
+                        Clicked="ClearGuests_Clicked"/>
 
                 </VerticalStackLayout>
 
@@ -129,16 +136,16 @@
                     FontAttributes="Bold"/>
 
                     <Grid
-                    ColumnDefinitions="2*,1*,1*,1*,1*,1*"
+                    ColumnDefinitions="2.5*,0.8*,0.8*,0.6*,1.4*,0.8*"
                     Padding="5"
                     BackgroundColor="{Binding RowColor}">
 
                         <Label Grid.Column="0" Text="Guest" FontAttributes="Bold" FontSize="16"/>
-                        <Label Grid.Column="1" Text="Adults" FontAttributes="Bold" FontSize="16"/>
+                        <Label Grid.Column="1" Text="Ad" FontAttributes="Bold" FontSize="16"/>
                         <Label Grid.Column="2" Text="Kids" FontAttributes="Bold" FontSize="16"/>
                         <Label Grid.Column="3" Text="HC" FontAttributes="Bold" FontSize="16"/>
                         <Label Grid.Column="4" Text="Status" FontAttributes="Bold" FontSize="16"/>
-                        <Label Grid.Column="5" Text="Table" FontAttributes="Bold" FontSize="16"/>
+                        <Label Grid.Column="5" Text="Tbl" FontAttributes="Bold" FontSize="16"/>
 
                     </Grid>
 
@@ -157,7 +164,7 @@
                             <DataTemplate>
 
                                 <Grid
-            ColumnDefinitions="2*,1*,1*,1*,1*,1*"
+            ColumnDefinitions="2.5*,0.8*,0.8*,0.6*,1.4*,0.8*"
             Padding="5">
 
                                     <Label
