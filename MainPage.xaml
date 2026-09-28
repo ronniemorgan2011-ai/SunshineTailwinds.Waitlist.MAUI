@@ -10,7 +10,7 @@
 
         <Grid
             Padding="15"
-            ColumnDefinitions="350,*">
+            ColumnDefinitions="240,*">
 
             <!-- ADD GUEST -->
 
