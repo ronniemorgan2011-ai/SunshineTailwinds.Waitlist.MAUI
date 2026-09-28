@@ -6,11 +6,11 @@
     x:Class="SunshineTailwinds.Waitlist.MAUI.MainPage">
 
     <ScrollView
-        Orientation="Both">
+        Orientation="Vertical">
 
         <Grid
             Padding="15"
-            ColumnDefinitions="240,*">
+            ColumnDefinitions="180,*">
 
             <!-- ADD GUEST -->
 
@@ -76,8 +76,8 @@
 
                     <Picker
                         Title="Select Table"
-                        TitleColor="White"
-                        TextColor="White"
+                        TitleColor="Black"
+                        TextColor="Black"
                         ItemsSource="{Binding Tables}"
                         SelectedItem="{Binding SelectedTable}"
                         ItemDisplayBinding="{Binding Name}" />
