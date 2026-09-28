@@ -45,12 +45,7 @@
                     HeightRequest="1"
                     Color="Gray"/>
 
-                <Label
-                    Text="{Binding CurrentWaitMinutes,
-                           StringFormat='Selected Guest Wait: {0} Minutes'}"
-                    FontSize="18"/>
-
-                <Label
+                 <Label
                     Text="{Binding LongestWaitMinutes,
                            StringFormat='Longest Wait: {0} Minutes'}"
                     FontSize="18"/>
