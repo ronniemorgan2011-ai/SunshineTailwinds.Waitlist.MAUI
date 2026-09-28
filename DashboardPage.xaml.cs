@@ -13,6 +13,15 @@ public partial class DashboardPage : ContentPage
         _viewModel = new MainViewModel();
 
         BindingContext = _viewModel;
+
+        Dispatcher.StartTimer(
+            TimeSpan.FromMinutes(1),
+            () =>
+            {
+                _viewModel.LoadGuests();
+
+                return true;
+            });
     }
 
     protected override void OnAppearing()
