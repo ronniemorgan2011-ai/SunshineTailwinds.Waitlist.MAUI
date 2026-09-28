@@ -15,9 +15,9 @@
             <!-- ADD GUEST -->
 
             <Border
-    Grid.Column="0"
-    Stroke="Gray"
-    Padding="15">
+                Grid.Column="0"
+                Stroke="Gray"
+                Padding="15">
 
                 <VerticalStackLayout Spacing="10">
 
@@ -46,7 +46,7 @@
                 x:Name="chkHighChair"/>
 
                         <Label
-                Text="High Chair Needed"
+                Text="High Chair"
                 VerticalOptions="Center"/>
 
                     </HorizontalStackLayout>
