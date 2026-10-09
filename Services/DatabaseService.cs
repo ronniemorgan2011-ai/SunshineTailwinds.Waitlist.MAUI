@@ -138,11 +138,12 @@ public class DatabaseService
     public List<Guest> GetGuests()
     {
         return _database.Table<Guest>()
-            .Where(g =>
-                g.Status == "Waiting" ||
-                g.Status == "Seated" ||
-                g.Status == "Orders In")
-            .ToList();
+                     .Where(g =>
+                        g.Status == "Waiting" ||
+                        g.Status == "Seated" ||
+                        g.Status == "Orders In" ||
+                        g.Status == "Paid")
+                            .ToList();
     }
 
     public int AddGuest(Guest guest)

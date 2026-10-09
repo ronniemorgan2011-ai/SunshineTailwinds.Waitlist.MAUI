@@ -142,15 +142,18 @@ public class MainViewModel : INotifyPropertyChanged
         if (SelectedTable == null)
             return "No table selected.";
 
-        bool tableAlreadyAssigned =
-            Guests.Any(g =>
-                g.Id != SelectedGuest.Id &&
-                g.TableNumber == SelectedTable.Name);
+        // Allow hosts to pre-assign tables
+        //bool tableAlreadyAssigned =
+          //  Guests.Any(g =>
+            //    g.Id != SelectedGuest.Id &&
+              //  g.TableNumber == SelectedTable.Name &&
+                //(g.Status == "Seated" ||
+                // g.Status == "Orders In"));
 
-        if (tableAlreadyAssigned)
-        {
-            return $"Table {SelectedTable.Name} is already assigned.";
-        }
+       // if (tableAlreadyAssigned)
+        //{
+         //   return $"Table {SelectedTable.Name} is already assigned.";
+        // }
 
         SelectedGuest.TableNumber = SelectedTable.Name;
 
@@ -161,16 +164,38 @@ public class MainViewModel : INotifyPropertyChanged
         return "";
     }
 
-    public void SeatSelectedGuest()
-    {
+    public string SeatSelectedGuest()
+   {
         if (SelectedGuest == null)
-            return;
+            return "No guest selected.";
+        if (string.IsNullOrWhiteSpace(SelectedGuest.TableNumber))
+        {
+            return "Please assign a table before seating the guest.";
+        }
+
+        bool tableOccupied =
+        Guests.Any(g =>
+         g.Id != SelectedGuest.Id &&
+         !string.IsNullOrWhiteSpace(g.TableNumber) &&
+         !string.IsNullOrWhiteSpace(SelectedGuest.TableNumber) &&
+         g.TableNumber.Trim().Equals(
+             SelectedGuest.TableNumber.Trim(),
+             StringComparison.OrdinalIgnoreCase) &&
+         (g.Status == "Seated" ||
+          g.Status == "Orders In"));
+
+        if (tableOccupied)
+        {
+            return $"Table {SelectedGuest.TableNumber} is currently occupied.";
+        }
 
         SelectedGuest.Status = "Seated";
 
         _database.UpdateGuest(SelectedGuest);
 
         LoadGuests();
+
+        return "";
     }
 
     public void OrdersInSelectedGuest()
@@ -179,6 +204,18 @@ public class MainViewModel : INotifyPropertyChanged
             return;
 
         SelectedGuest.Status = "Orders In";
+
+        _database.UpdateGuest(SelectedGuest);
+
+        LoadGuests();
+    }
+
+    public void MarkGuestPaid()
+    {
+        if (SelectedGuest == null)
+            return;
+
+        SelectedGuest.Status = "Paid";
 
         _database.UpdateGuest(SelectedGuest);
 

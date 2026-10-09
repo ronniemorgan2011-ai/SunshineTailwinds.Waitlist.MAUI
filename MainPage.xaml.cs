@@ -1,4 +1,5 @@
-﻿using SunshineTailwinds.Waitlist.MAUI.ViewModels;
+﻿using SunshineTailwinds.Waitlist.MAUI.Models;
+using SunshineTailwinds.Waitlist.MAUI.ViewModels;
 
 namespace SunshineTailwinds.Waitlist.MAUI;
 
@@ -52,8 +53,8 @@ public partial class MainPage : ContentPage
     }
 
     private async void AssignTable_Clicked(
-    object sender,
-    EventArgs e)
+        object sender,
+        EventArgs e)
     {
         string result =
             _viewModel.AssignSelectedTable();
@@ -71,11 +72,22 @@ public partial class MainPage : ContentPage
         RefreshBindings();
     }
 
-    private void SeatGuest_Clicked(
+    private async void SeatGuest_Clicked(
         object sender,
         EventArgs e)
     {
-        _viewModel.SeatSelectedGuest();
+        string result =
+            _viewModel.SeatSelectedGuest();
+
+        if (!string.IsNullOrWhiteSpace(result))
+        {
+            await DisplayAlert(
+                "Seat Guest",
+                result,
+                "OK");
+
+            return;
+        }
 
         RefreshBindings();
     }
@@ -108,8 +120,8 @@ public partial class MainPage : ContentPage
     }
 
     private async void ClearGuests_Clicked(
-    object sender,
-    EventArgs e)
+        object sender,
+        EventArgs e)
     {
         bool answer =
             await DisplayAlert(
@@ -122,5 +134,62 @@ public partial class MainPage : ContentPage
             return;
 
         _viewModel.ClearGuests();
+    }
+
+    private async void GuestActionMenu_Clicked(
+        object sender,
+        EventArgs e)
+    {
+        if (sender is not Button button)
+            return;
+
+        if (button.BindingContext is not Guest guest)
+            return;
+
+        _viewModel.SelectedGuest = guest;
+
+        string action =
+            await DisplayActionSheet(
+                $"What would you like to do with {guest.GuestName}?",
+                "Cancel",
+                null,
+                "Pre-Seat Guest",
+                "Seat Guest",
+                "Orders In",
+                "Paid",
+                "Close Party",
+                "Remove Guest");
+
+        switch (action)
+        {
+            case "Seat Guest":
+                SeatGuest_Clicked(sender, EventArgs.Empty);
+                break;
+
+            case "Orders In":
+                OrdersIn_Clicked(sender, EventArgs.Empty);
+                break;
+
+            case "Close Party":
+                CloseParty_Clicked(sender, EventArgs.Empty);
+                break;
+
+            case "Remove Guest":
+                RemoveGuest_Clicked(sender, EventArgs.Empty);
+                break;
+
+            case "Pre-Seat Guest":
+
+                await Navigation.PushModalAsync(
+                    new TableSelectionPage(
+                        guest,
+                        RefreshBindings));
+                break;
+
+            case "Paid":
+                _viewModel.MarkGuestPaid();
+                RefreshBindings();
+                break;
+        }
     }
 }

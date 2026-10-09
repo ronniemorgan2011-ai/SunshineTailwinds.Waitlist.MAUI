@@ -136,7 +136,7 @@
                     FontAttributes="Bold"/>
 
                     <Grid
-                    ColumnDefinitions="2.5*,0.8*,0.8*,0.6*,1.4*,0.8*"
+                    ColumnDefinitions="2.5*,0.8*,0.8*,0.6*,1.4*,0.8*,0.5*"
                     Padding="5"
                     BackgroundColor="{Binding RowColor}">
 
@@ -146,6 +146,7 @@
                         <Label Grid.Column="3" Text="HC" FontAttributes="Bold" FontSize="16"/>
                         <Label Grid.Column="4" Text="Status" FontAttributes="Bold" FontSize="16"/>
                         <Label Grid.Column="5" Text="Tbl" FontAttributes="Bold" FontSize="16"/>
+                        <Label Grid.Column="6" Text="⋮"   FontAttributes="Bold" FontSize="16" HorizontalTextAlignment="Center" HorizontalOptions="Center"/>
 
                     </Grid>
 
@@ -155,63 +156,76 @@
                     Margin="0,0,0,5"/>
 
                     <CollectionView
-                    ItemsSource="{Binding Guests}"
-                    SelectionMode="Single"
-                    SelectedItem="{Binding SelectedGuest}">
+    ItemsSource="{Binding Guests}"
+    SelectionMode="Single"
+    SelectedItem="{Binding SelectedGuest}">
 
                         <CollectionView.ItemTemplate>
 
                             <DataTemplate>
 
                                 <Grid
-            ColumnDefinitions="2.5*,0.8*,0.8*,0.6*,1.4*,0.8*"
-            Padding="5">
+                ColumnDefinitions="2.5*,0.8*,0.8*,0.6*,1.4*,0.8*,0.5*"
+                Padding="5">
 
                                     <Label
-                Grid.Column="0"
-                Text="{Binding GuestName}"
-                FontSize="16" />
+                    Grid.Column="0"
+                    Text="{Binding GuestName}"
+                    FontSize="16" />
 
                                     <Label
-                Grid.Column="1"
-                Text="{Binding Adults}"
-                FontSize="16" />
+                    Grid.Column="1"
+                    Text="{Binding Adults}"
+                    FontSize="16" />
+
                                     <Label
-                Grid.Column="2"
-                Text="{Binding Children}"
-                FontSize="16" />
+                    Grid.Column="2"
+                    Text="{Binding Children}"
+                    FontSize="16" />
+
                                     <Label
-                Grid.Column="3"
-                Text="{Binding HighChairDisplay}"
-                FontSize="16" />
+                    Grid.Column="3"
+                    Text="{Binding HighChairDisplay}"
+                    FontSize="16" />
 
                                     <Border
-                Grid.Column="4"
-                BackgroundColor="{Binding StatusColor}"
-                StrokeThickness="0"
-                Padding="4">
+                    Grid.Column="4"
+                    BackgroundColor="{Binding StatusColor}"
+                    StrokeThickness="0"
+                    Padding="4">
 
                                         <Label
-                    Text="{Binding Status}"
-                    TextColor="{AppThemeBinding Light=Black, Dark=White}"
-                    FontAttributes="Bold"
-                    FontSize="16" />
+                        Text="{Binding Status}"
+                        TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                        FontAttributes="Bold"
+                        FontSize="16" />
 
                                     </Border>
 
                                     <Border
-                Grid.Column="5"
-                BackgroundColor="{Binding StatusColor}"
-                StrokeThickness="0"
-                Padding="4">
+                    Grid.Column="5"
+                    BackgroundColor="{Binding StatusColor}"
+                    StrokeThickness="0"
+                    Padding="4">
 
                                         <Label
-                    Text="{Binding TableNumber}"
-                    TextColor="{AppThemeBinding Light=Black, Dark=White}"
-                    FontAttributes="Bold"
-                    FontSize="16" />
+                        Text="{Binding TableNumber}"
+                        TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                        FontAttributes="Bold"
+                        FontSize="16" />
 
                                     </Border>
+
+                                    <Button
+                    Grid.Column="6"
+                    Text="⋮"
+                    FontSize="18"
+                    WidthRequest="40"
+                    HeightRequest="40"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"                    
+                    CommandParameter="{Binding Id}"
+                    Clicked="GuestActionMenu_Clicked" />
 
                                 </Grid>
 
@@ -220,6 +234,7 @@
                         </CollectionView.ItemTemplate>
 
                     </CollectionView>
+
 
                 </VerticalStackLayout>
 
