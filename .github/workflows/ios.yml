@@ -22,8 +22,10 @@ jobs:
           xcode-version: '27.0'
       
       - name: Show Xcode Version
-        run: xcodebuild -version
-      
+        run: |
+         which xcodebuild
+          xcodebuild -version
+          
       - name: Install MAUI workload
         run: dotnet workload install maui
 
