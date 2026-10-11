@@ -126,7 +126,8 @@ public class MainViewModel : INotifyPropertyChanged
             Status = "Waiting",
             TableNumber = "",
             TimeAdded = DateTime.Now.ToShortTimeString(),
-            TimeAddedDate = DateTime.Now
+            TimeAddedDate = DateTime.Now,
+            SortOrder = Guests.Count + 1
         };
 
         _database.AddGuest(guest);
@@ -252,4 +253,53 @@ public class MainViewModel : INotifyPropertyChanged
 
         LoadGuests();
     }
+
+    public void MoveSelectedGuestUp()
+    {
+        if (SelectedGuest == null)
+            return;
+
+        var guestAbove = Guests
+            .Where(g => g.SortOrder < SelectedGuest.SortOrder)
+            .OrderByDescending(g => g.SortOrder)
+            .FirstOrDefault();
+
+        if (guestAbove == null)
+            return;
+
+        int temp = SelectedGuest.SortOrder;
+
+        SelectedGuest.SortOrder = guestAbove.SortOrder;
+        guestAbove.SortOrder = temp;
+
+        _database.UpdateGuest(SelectedGuest);
+        _database.UpdateGuest(guestAbove);
+
+        LoadGuests();
+    }
+
+    public void MoveSelectedGuestDown()
+    {
+        if (SelectedGuest == null)
+            return;
+
+        var guestBelow = Guests
+            .Where(g => g.SortOrder > SelectedGuest.SortOrder)
+            .OrderBy(g => g.SortOrder)
+            .FirstOrDefault();
+
+        if (guestBelow == null)
+            return;
+
+        int temp = SelectedGuest.SortOrder;
+
+        SelectedGuest.SortOrder = guestBelow.SortOrder;
+        guestBelow.SortOrder = temp;
+
+        _database.UpdateGuest(SelectedGuest);
+        _database.UpdateGuest(guestBelow);
+
+        LoadGuests();
+    }
+
 }

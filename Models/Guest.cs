@@ -23,6 +23,7 @@ public class Guest
     public string TimeAdded { get; set; } = "";
 
     public DateTime TimeAddedDate { get; set; }
+    public int SortOrder { get; set; }
 
     [Ignore]
     public int WaitMinutes
@@ -40,6 +41,11 @@ public class Guest
     [Ignore]
     public string HighChairDisplay =>
         HighChairRequired ? "✓" : "";
+    [Ignore]
+    public string GuestDisplay =>
+    HighChairRequired
+        ? $"{GuestName} 🪑"
+        : GuestName;
 
     [Ignore]
     public Color StatusColor =>

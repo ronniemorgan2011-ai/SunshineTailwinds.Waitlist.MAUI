@@ -1,0 +1,22 @@
+# Pinned because newer workload versions currently
+# install Apple SDK versions incompatible with
+# GitHub-hosted Xcode runners.
+
+- name: Install MAUI workload
+  run: dotnet workload install maui --version 10.0.401
+
+✅ IPA build fixed
+
+✅ Table selection popup working
+
+✅ Pre-seat workflow improved
+
+✅ ⋮ actions menu working
+
+✅ Paid status added
+
+✅ Green Paid indicator
+
+✅ Occupied table visual indicators
+
+✅ Real-world hostess feedback incorporated
