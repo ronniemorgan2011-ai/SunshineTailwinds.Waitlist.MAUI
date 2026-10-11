@@ -27,8 +27,9 @@
                 FontAttributes="Bold" />
 
                     <HorizontalStackLayout
-                Spacing="10">
-
+                        Spacing="10"
+                        HorizontalOptions="Center">
+                        
                         <Entry
                     x:Name="txtGuestName"
                     Placeholder="Guest Name"
@@ -95,7 +96,7 @@
                         FontAttributes="Bold"/>
 
                     <Grid
-    ColumnDefinitions="2.5*,0.8*,0.8*,0.6*,1.4*,0.8*,0.5*"
+    ColumnDefinitions="2.4*,0.7*,0.7*,1.0*,1.4*,0.8*,0.5*"
     Padding="5">
 
                         <Label Grid.Column="0" Text="Guest" FontAttributes="Bold"/>
@@ -172,7 +173,7 @@
 
                                     <Button
                     Grid.Column="6"
-                    Text="⋮"
+                    Text="⋮"       
                     FontSize="18"
                     WidthRequest="40"
                     HeightRequest="40"
