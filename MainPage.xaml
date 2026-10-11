@@ -96,7 +96,7 @@
                         FontAttributes="Bold"/>
 
                     <Grid
-    ColumnDefinitions="2.4*,0.7*,0.7*,1.0*,1.4*,0.8*,0.5*"
+    ColumnDefinitions="2.5*,0.8*,0.8*,1.0*,1.4*,0.8*,0.7*"
     Padding="5">
 
                         <Label Grid.Column="0" Text="Guest" FontAttributes="Bold"/>
@@ -105,7 +105,7 @@
                                   <Label Grid.Column="3" Text="Time" FontAttributes="Bold"/>
                                     <Label Grid.Column="4" Text="Status" FontAttributes="Bold"/>
                                         <Label Grid.Column="5" Text="Tbl" FontAttributes="Bold"/>
-                                            <Label Grid.Column="6" Text="⋮" FontAttributes="Bold"/>
+                                            <Label Grid.Column="6" Text="⋮" FontAttributes="Bold" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
 
                     </Grid>
 
@@ -124,7 +124,7 @@
                             <DataTemplate>
 
                                 <Grid
-                ColumnDefinitions="2.5*,0.8*,0.8*,0.6*,1.4*,0.8*,0.5*"
+                ColumnDefinitions="2.5*,0.8*,0.8*,1.0*,1.4*,0.8*,0.7*"
                 Padding="5">
                     <Label Grid.Column="0" Text="{Binding GuestDisplay}" FontSize="16" />
 
@@ -174,7 +174,7 @@
                                     <Button
                     Grid.Column="6"
                     Text="⋮"       
-                    FontSize="18"
+                    FontSize="16"
                     WidthRequest="40"
                     HeightRequest="40"
                     HorizontalOptions="Center"
