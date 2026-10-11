@@ -65,6 +65,18 @@ public class DatabaseService
     public List<TableInfo> GetAllTables()
     {
         return _database.Table<TableInfo>()
+            .ToList()
+            .OrderBy(t =>
+            {
+                string numberPart = new string(
+                    t.Name.TakeWhile(char.IsDigit).ToArray());
+
+                if (int.TryParse(numberPart, out int tableNumber))
+                    return tableNumber;
+
+                return 999;
+            })
+            .ThenBy(t => t.Name)
             .ToList();
     }
 
@@ -105,15 +117,18 @@ public class DatabaseService
             .ToList();
 
         return tables
-            .OrderBy(t =>
-            {
-                if (int.TryParse(t.Name, out int tableNumber))
-                    return tableNumber;
+     .OrderBy(t =>
+     {
+         string numberPart = new string(
+             t.Name.TakeWhile(char.IsDigit).ToArray());
 
-                return 999;
-            })
-            .ThenBy(t => t.Name)
-            .ToList();
+         if (int.TryParse(numberPart, out int tableNumber))
+             return tableNumber;
+
+         return 999;
+     })
+     .ThenBy(t => t.Name)
+     .ToList();
     }
 
     public void AddTable(TableInfo table)

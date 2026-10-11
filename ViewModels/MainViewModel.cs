@@ -127,7 +127,8 @@ public class MainViewModel : INotifyPropertyChanged
             TableNumber = "",
             TimeAdded = DateTime.Now.ToShortTimeString(),
             TimeAddedDate = DateTime.Now,
-            SortOrder = Guests.Count + 1
+            SortOrder = Guests.Any() ? Guests.Max(g => g.SortOrder) + 1:1
+
         };
 
         _database.AddGuest(guest);
