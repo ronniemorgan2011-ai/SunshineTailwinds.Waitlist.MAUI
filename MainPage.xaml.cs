@@ -184,7 +184,7 @@ public partial class MainPage : ContentPage
                 RemoveGuest_Clicked(sender, EventArgs.Empty);
                 break;
 
-            case "Back To Waiting":
+            case "Return To Waiting":
                 _viewModel.ReturnGuestToWaiting();
                 RefreshBindings();
                 break;
