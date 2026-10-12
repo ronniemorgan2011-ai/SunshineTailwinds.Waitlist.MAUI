@@ -72,6 +72,7 @@ public partial class MainPage : ContentPage
         RefreshBindings();
     }
 
+
     private async void SeatGuest_Clicked(
         object sender,
         EventArgs e)
@@ -153,36 +154,20 @@ public partial class MainPage : ContentPage
                 $"What would you like to do with {guest.GuestName}?",
                 "Cancel",
                 null,
-
                 "Edit Entry",
-
-                "────────",
-
                 "Move Up",
                 "Move Down",
-
-                "─────────",
-
                 "Pre-Seat Guest",
-
-                "──────────",
-
+                "Return To Waiting",
                 "Seat Guest",
                 "Orders In",
                 "Paid",
                 "Close Party",
-
-                "───────────",
-
                 "Remove Guest");
 
         switch (action)
         {
-            case "────────":
-            case "─────────":
-            case "──────────":
-            case "───────────":
-                break;
+
             case "Seat Guest":
                 SeatGuest_Clicked(sender, EventArgs.Empty);
                 break;
@@ -197,6 +182,11 @@ public partial class MainPage : ContentPage
 
             case "Remove Guest":
                 RemoveGuest_Clicked(sender, EventArgs.Empty);
+                break;
+
+            case "Back To Waiting":
+                _viewModel.ReturnGuestToWaiting();
+                RefreshBindings();
                 break;
 
             case "Edit Entry":

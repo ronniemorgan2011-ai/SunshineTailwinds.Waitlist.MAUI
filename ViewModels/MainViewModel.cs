@@ -200,6 +200,18 @@ public class MainViewModel : INotifyPropertyChanged
         return "";
     }
 
+    public void ReturnGuestToWaiting()
+    {
+        if (SelectedGuest == null)
+            return;
+
+        SelectedGuest.Status = "Waiting";
+
+        _database.UpdateGuest(SelectedGuest);
+
+        LoadGuests();
+    }
+
     public void OrdersInSelectedGuest()
     {
         if (SelectedGuest == null)
