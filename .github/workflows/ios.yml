@@ -60,6 +60,13 @@ jobs:
           echo "$PROVISIONING_PROFILE" | base64 --decode > \
           ~/Library/MobileDevice/Provisioning\ Profiles/RonnieAppDev.mobileprovision
 
+          - name: Verify Provisioning Profile
+          run: |
+          ls -lah ~/Library/MobileDevice/Provisioning\ Profiles
+
+          security cms -D -i \
+          ~/Library/MobileDevice/Provisioning\ Profiles/RonnieAppDev.mobileprovision | head -100
+
       - name: Build Signed IPA
         run: |
           dotnet publish SunshineTailwinds.Waitlist.MAUI.csproj \
