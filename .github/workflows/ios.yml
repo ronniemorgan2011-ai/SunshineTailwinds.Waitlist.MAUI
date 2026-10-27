@@ -72,6 +72,7 @@ jobs:
             -c Release \
             -p:RuntimeIdentifier=ios-arm64 \
             -p:ArchiveOnBuild=true
+            -p:MtouchLink=None
 
       - name: Locate IPA
         run: |
