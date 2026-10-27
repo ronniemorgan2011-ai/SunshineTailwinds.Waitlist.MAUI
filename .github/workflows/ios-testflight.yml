@@ -49,14 +49,17 @@ jobs:
             -k buildpass \
             build.keychain
 
+      - name: List Signing Identities
+        run: |
+          security find-identity -v -p codesigning
+
       - name: Install App Store Profile
         env:
           APPSTORE_PROFILE: ${{ secrets.APPSTORE_PROFILE }}
         run: |
           mkdir -p "$HOME/Library/MobileDevice/Provisioning Profiles"
 
-          echo "$APPSTORE_PROFILE" | base64 --decode > \
-          "$HOME/Library/MobileDevice/Provisioning Profiles/SSHTAppStoreConnect.mobileprovision"
+          echo "$APPSTORE_PROFILE" | base64 --decode > "$HOME/Library/MobileDevice/Provisioning Profiles/SSHTAppStoreConnect.mobileprovision"
 
       - name: Build Release IPA
         run: |
