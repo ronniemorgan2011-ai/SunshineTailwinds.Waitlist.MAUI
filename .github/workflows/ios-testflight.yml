@@ -82,18 +82,12 @@ jobs:
           path: |
             **/*.ipa
 
-      - name: Upload to App Store Connect
+      - name: List App Store Providers
         env:
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APP_SPECIFIC_PASSWORD: ${{ secrets.APP_SPECIFIC_PASSWORD }}
         run: |
-          IPA_PATH=$(find . -name "*.ipa" | head -1)
-
-          echo "Uploading IPA: $IPA_PATH"
-
           xcrun altool \
-            --upload-app \
-            --type ios \
-            --file "$IPA_PATH" \
+            --list-providers \
             --username "$APPLE_ID" \
             --password "$APP_SPECIFIC_PASSWORD"
