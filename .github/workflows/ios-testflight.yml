@@ -71,8 +71,8 @@ jobs:
             -p:CodesignKey="Apple Distribution: Ronnie Morgan (6XP7R98XR9)" \
             -p:CodesignProvision="SSHT-AppStoreConnect"
 
-           - name: Locate IPA
-            run: |
+      - name: Locate IPA
+        run: |
           find . -name "*.ipa"
 
       - name: Upload IPA Artifact
