@@ -49,10 +49,6 @@ jobs:
             -k buildpass \
             build.keychain
 
-      - name: List Signing Identities
-        run: |
-          security find-identity -v -p codesigning
-
       - name: Install App Store Profile
         env:
           APPSTORE_PROFILE: ${{ secrets.APPSTORE_PROFILE }}
@@ -97,4 +93,4 @@ jobs:
             --file "$IPA_PATH" \
             --username "$APPLE_ID" \
             --password "$APP_SPECIFIC_PASSWORD" \
-            --asc-provider 6XP7R98XR9
+            --asc-public-id 0f7dfe9c-aa09-4fa3-8077-0e5e4db97eb4
