@@ -56,11 +56,11 @@ jobs:
           mkdir -p "$HOME/Library/MobileDevice/Provisioning Profiles"
           echo "$APPSTORE_PROFILE" | base64 --decode > "$HOME/Library/MobileDevice/Provisioning Profiles/SSHTAppStoreConnect.mobileprovision"
 
-      - name: Build IPA
+      - name: Build Release IPA
         run: |
           dotnet publish SunshineTailwinds.Waitlist.MAUI.csproj \
             -f net10.0-ios \
-            -c Debug \
+            -c Release \
             -p:RuntimeIdentifier=ios-arm64 \
             -p:ArchiveOnBuild=false \
             -p:MtouchLink=None \
@@ -77,20 +77,3 @@ jobs:
           name: testflight-ipa
           path: |
             **/*.ipa
-
-      - name: Upload to App Store Connect
-        env:
-          APPLE_ID: ${{ secrets.APPLE_ID }}
-          APP_SPECIFIC_PASSWORD: ${{ secrets.APP_SPECIFIC_PASSWORD }}
-        run: |
-          IPA_PATH=$(find . -name "*.ipa" | head -1)
-
-          echo "Uploading IPA: $IPA_PATH"
-
-          xcrun altool \
-            --upload-app \
-            --type ios \
-            --file "$IPA_PATH" \
-            --username "$APPLE_ID" \
-            --password "$APP_SPECIFIC_PASSWORD" \
-            --asc-public-id 0f7dfe9c-aa09-4fa3-8077-0e5e4db97eb4
