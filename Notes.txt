@@ -24,3 +24,35 @@ Updates: 10/10/26
 ✅ Occupied table visual indicators
 
 ✅ Real-world hostess feedback incorporated
+
+
+10/26/26
+App Dev Account Created
+
+Phase 1
+Get GitHub signing working
+
+Phase 2
+Upload to TestFlight
+
+Phase 3
+You + Tara test
+
+Phase 4
+App Store release
+
+Current Status
+
+✅ Paid Apple Developer Account Active
+ ✅ Team ID: 6XP7R98XR9
+ ✅ Apple Development Certificate Working
+ ✅ P12 Created and Valid
+ ✅ GitHub Secrets Configured
+ ✅ Correct App ID Created
+ ✅ New Provisioning Profile Generated
+ ✅ GitHub Signing Pipeline Mostly Functional
+
+IOS_CERTIFICATE Base64 text from AppleDev_base64.txt
+IOS_CERTIFICATE_PASSWORD Your P12 password
+PROVISIONING_PROFILE Base64 text from RonnieAppDev.mobileprovision
+APPLE_TEAM_ID 6XP7R98XR9
