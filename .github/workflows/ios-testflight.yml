@@ -67,6 +67,7 @@ jobs:
             -c Release \
             -p:RuntimeIdentifier=ios-arm64 \
             -p:ArchiveOnBuild=true \
+            -p:MtouchLink=None \
             -p:CodesignKey="Apple Distribution: Ronnie Morgan (6XP7R98XR9)" \
             -p:CodesignProvision="SSHT-AppStoreConnect"
 
