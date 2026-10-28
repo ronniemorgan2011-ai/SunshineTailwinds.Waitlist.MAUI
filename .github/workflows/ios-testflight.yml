@@ -71,25 +71,29 @@ jobs:
             -p:CodesignKey="Apple Distribution: Ronnie Morgan (6XP7R98XR9)" \
             -p:CodesignProvision="SSHT-AppStoreConnect"
 
-      - name: Locate IPA
-        run: |
+           - name: Locate IPA
+            run: |
           find . -name "*.ipa"
 
       - name: Upload IPA Artifact
         uses: actions/upload-artifact@v4
         with:
           name: testflight-ipa
+          path: |
+            **/*.ipa
+
       - name: Upload to App Store Connect
         env:
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APP_SPECIFIC_PASSWORD: ${{ secrets.APP_SPECIFIC_PASSWORD }}
         run: |
+          IPA_PATH=$(find . -name "*.ipa" | head -1)
+
+          echo "Uploading IPA: $IPA_PATH"
+
           xcrun altool \
             --upload-app \
             --type ios \
-            --file $(find . -name "*.ipa" | head -1) \
+            --file "$IPA_PATH" \
             --username "$APPLE_ID" \
             --password "$APP_SPECIFIC_PASSWORD"
-          
-          path: |
-            **/*.ipa
