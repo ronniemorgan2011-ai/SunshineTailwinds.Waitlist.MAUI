@@ -57,40 +57,34 @@ jobs:
 
           echo "$APPSTORE_PROFILE" | base64 --decode > "$HOME/Library/MobileDevice/Provisioning Profiles/SSHTAppStoreConnect.mobileprovision"
 
-      - name: Build IPA
+      - name: Build Release IPA With Binlog
         run: |
           dotnet publish SunshineTailwinds.Waitlist.MAUI.csproj \
             -f net10.0-ios \
-            -c Debug \
+            -c Release \
             -p:RuntimeIdentifier=ios-arm64 \
             -p:ArchiveOnBuild=false \
             -p:MtouchLink=None \
             -p:CodesignKey="Apple Distribution: Ronnie Morgan (6XP7R98XR9)" \
-            -p:CodesignProvision="SSHT-AppStoreConnect"
+            -p:CodesignProvision="SSHT-AppStoreConnect" \
+            -bl:publish.binlog
 
       - name: Locate IPA
+        if: always()
         run: |
           find . -name "*.ipa"
 
+      - name: Upload Binlog
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: publish-binlog
+          path: publish.binlog
+
       - name: Upload IPA Artifact
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: testflight-ipa
           path: |
             **/*.ipa
-
-      - name: Upload With Transporter
-        env:
-          APPLE_ID: ${{ secrets.APPLE_ID }}
-          APP_SPECIFIC_PASSWORD: ${{ secrets.APP_SPECIFIC_PASSWORD }}
-        run: |
-          IPA_PATH=$(find . -name "*.ipa" | head -1)
-
-          echo "Uploading IPA: $IPA_PATH"
-
-          xcrun iTMSTransporter \
-            -m upload \
-            -assetFile "$IPA_PATH" \
-            -u "$APPLE_ID" \
-            -p "$APP_SPECIFIC_PASSWORD" \
-            -v informational
