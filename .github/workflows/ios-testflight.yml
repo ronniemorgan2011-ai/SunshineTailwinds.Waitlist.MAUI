@@ -79,5 +79,17 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: testflight-ipa
+      - name: Upload to App Store Connect
+        env:
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APP_SPECIFIC_PASSWORD: ${{ secrets.APP_SPECIFIC_PASSWORD }}
+        run: |
+          xcrun altool \
+            --upload-app \
+            --type ios \
+            --file $(find . -name "*.ipa" | head -1) \
+            --username "$APPLE_ID" \
+            --password "$APP_SPECIFIC_PASSWORD"
+          
           path: |
             **/*.ipa
