@@ -49,15 +49,12 @@ jobs:
             -k buildpass \
             build.keychain
 
-      - name: List Signing Identities
-        run: |
-          security find-identity -v -p codesigning
-
       - name: Install App Store Profile
         env:
           APPSTORE_PROFILE: ${{ secrets.APPSTORE_PROFILE }}
         run: |
           mkdir -p "$HOME/Library/MobileDevice/Provisioning Profiles"
+
           echo "$APPSTORE_PROFILE" | base64 --decode > "$HOME/Library/MobileDevice/Provisioning Profiles/SSHTAppStoreConnect.mobileprovision"
 
       - name: Build IPA
@@ -81,3 +78,19 @@ jobs:
           name: testflight-ipa
           path: |
             **/*.ipa
+
+      - name: Upload With Transporter
+        env:
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APP_SPECIFIC_PASSWORD: ${{ secrets.APP_SPECIFIC_PASSWORD }}
+        run: |
+          IPA_PATH=$(find . -name "*.ipa" | head -1)
+
+          echo "Uploading IPA: $IPA_PATH"
+
+          xcrun iTMSTransporter \
+            -m upload \
+            -assetFile "$IPA_PATH" \
+            -u "$APPLE_ID" \
+            -p "$APP_SPECIFIC_PASSWORD" \
+            -v informational
