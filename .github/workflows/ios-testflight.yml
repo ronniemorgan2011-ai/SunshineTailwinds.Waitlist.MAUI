@@ -57,7 +57,7 @@ jobs:
 
           echo "$APPSTORE_PROFILE" | base64 --decode > "$HOME/Library/MobileDevice/Provisioning Profiles/SSHTAppStoreConnect.mobileprovision"
 
-      - name: Build Release IPA
+      - name: Build IPA
         run: |
           dotnet publish SunshineTailwinds.Waitlist.MAUI.csproj \
             -f net10.0-ios \
@@ -70,10 +70,21 @@ jobs:
             -p:CodesignProvision="SSHT-AppStoreConnect" \
             -bl:publish.binlog
 
-      - name: Locate IPA
-        if: always()
+      - name: Find IPA
         run: |
           find . -name "*.ipa"
+
+      - name: Upload to TestFlight
+        env:
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APP_SPECIFIC_PASSWORD: ${{ secrets.APP_SPECIFIC_PASSWORD }}
+        run: |
+          xcrun altool \
+            --upload-app \
+            --type ios \
+            --file bin/Release/net10.0-ios/ios-arm64/publish/SunshineTailwinds.Waitlist.MAUI.ipa \
+            --username "$APPLE_ID" \
+            --password "$APP_SPECIFIC_PASSWORD"
 
       - name: Upload Binlog
         if: always()
@@ -82,7 +93,7 @@ jobs:
           name: publish-binlog
           path: publish.binlog
 
-      - name: Upload IPA Artifact
+      - name: Upload IPA
         if: always()
         uses: actions/upload-artifact@v4
         with:
