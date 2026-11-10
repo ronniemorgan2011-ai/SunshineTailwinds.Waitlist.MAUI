@@ -149,26 +149,32 @@ public partial class MainPage : ContentPage
 
         _viewModel.SelectedGuest = guest;
 
-        string action =
-            await DisplayActionSheet(
-                $"What would you like to do with {guest.GuestName}?",
-                "Cancel",
-                null,
-                "Edit Entry",
-                "Move Up",
-                "Move Down",
-                "Pre-Seat Guest",
-                "Return To Waiting",
-                "Seat Guest",
-                "Orders In",
-                "Paid",
-                "Close Party",
-                "Remove Guest");
+        var actionPage = new GuestActionPage();
 
+        await Navigation.PushModalAsync(actionPage);
+
+        await actionPage.WaitForCloseAsync();
+
+        string action = actionPage.SelectedAction;
+       
         switch (action)
         {
 
             case "Seat Guest":
+
+                if (string.IsNullOrWhiteSpace(guest.TableNumber))
+                {
+                    await Task.Delay(250);
+
+                    await Navigation.PushModalAsync(
+                        new TableSelectionPage(
+                            guest,
+                            RefreshBindings,
+                            true));
+
+                    return;
+                }
+
                 SeatGuest_Clicked(sender, EventArgs.Empty);
                 break;
 
@@ -197,12 +203,15 @@ public partial class MainPage : ContentPage
                         RefreshBindings));
                 break;
 
-            case "Pre-Seat Guest":
+            case "Assign Table":
+
+                await Task.Delay(250);
 
                 await Navigation.PushModalAsync(
                     new TableSelectionPage(
                         guest,
                         RefreshBindings));
+
                 break;
 
             case "Paid":

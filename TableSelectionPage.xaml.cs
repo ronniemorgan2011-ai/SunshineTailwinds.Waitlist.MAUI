@@ -8,10 +8,12 @@ public partial class TableSelectionPage : ContentPage
     private readonly DatabaseService _database;
     private readonly Guest _guest;
     private readonly Action _refreshAction;
+    private readonly bool _seatAfterAssign;
 
     public TableSelectionPage(
-        Guest guest,
-        Action refreshAction)
+    Guest guest,
+    Action refreshAction,
+    bool seatAfterAssign = false)
     {
         InitializeComponent();
 
@@ -20,6 +22,8 @@ public partial class TableSelectionPage : ContentPage
         _guest = guest;
 
         _refreshAction = refreshAction;
+
+        _seatAfterAssign = seatAfterAssign;
 
         lblTitle.Text =
             $"Select Table For {_guest.GuestName}";
@@ -100,6 +104,11 @@ public partial class TableSelectionPage : ContentPage
 
                 _guest.TableNumber = table.Name;
 
+                if (_seatAfterAssign)
+                {
+                    _guest.Status = "Seated";
+                }
+                
                 _database.UpdateGuest(_guest);
 
                 _refreshAction?.Invoke();
