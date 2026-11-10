@@ -197,10 +197,13 @@ public partial class MainPage : ContentPage
 
             case "Edit Entry":
 
+                await Task.Delay(250);
+
                 await Navigation.PushModalAsync(
                     new EditGuestPage(
                         guest,
                         RefreshBindings));
+
                 break;
 
             case "Assign Table":
@@ -212,11 +215,6 @@ public partial class MainPage : ContentPage
                         guest,
                         RefreshBindings));
 
-                break;
-
-            case "Paid":
-                _viewModel.MarkGuestPaid();
-                RefreshBindings();
                 break;
 
             case "Move Up":

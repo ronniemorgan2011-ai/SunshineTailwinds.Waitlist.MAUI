@@ -44,11 +44,11 @@ public partial class TableSelectionPage : ContentPage
         foreach (var table in tables)
         {
             var occupyingGuest =
-                guests.FirstOrDefault(g =>
-                    g.TableNumber == table.Name &&
-                    (g.Status == "Seated" ||
-                     g.Status == "Orders In"||
-                     g.Status == "Paid"));
+          guests.FirstOrDefault(g =>
+              g.TableNumber == table.Name &&
+              (g.Status == "Seated" ||
+               g.Status == "Orders In"));
+
 
             var button = new Button
             {
@@ -70,11 +70,7 @@ public partial class TableSelectionPage : ContentPage
                     button.BackgroundColor =
                         Color.FromArgb("#F48FB1");
                 }
-                else if (occupyingGuest.Status == "Paid")
-                {
-                    button.BackgroundColor =
-                        Color.FromArgb("#81C784");
-                }
+                
             }
 
             button.Clicked += async (s, e) =>

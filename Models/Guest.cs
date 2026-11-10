@@ -53,7 +53,6 @@ public class Guest
      {
          "Seated" => Color.FromArgb("#FFE082"),
          "Orders In" => Color.FromArgb("#F48FB1"),
-         "Paid" => Color.FromArgb("#81C784"),
          _ => Colors.Transparent
      };
 }

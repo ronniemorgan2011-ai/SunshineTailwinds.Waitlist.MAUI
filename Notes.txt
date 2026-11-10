@@ -1,6 +1,25 @@
-Updates: 10/10/26
+Update: 11/9/2026
 
+Changes and Updates:
+What Build 3 includes
 
+Based on everything you changed:
+
+✅ Custom guest action popup
+
+✅ Yellow Seat Guest button
+
+✅ Pink Orders In button
+
+✅ Green Paid button
+
+✅ Close Party restored
+
+✅ Assign Table renamed
+
+✅ Smart Seat Guest workflow
+
+Update: 10/10/26
 
 # Pinned because newer workload versions currently
 # install Apple SDK versions incompatible with
@@ -56,3 +75,4 @@ IOS_CERTIFICATE Base64 text from AppleDev_base64.txt
 IOS_CERTIFICATE_PASSWORD Your P12 password
 PROVISIONING_PROFILE Base64 text from RonnieAppDev.mobileprovision
 APPLE_TEAM_ID 6XP7R98XR9
+

@@ -25,12 +25,6 @@
                 TextColor="Black" />
 
             <Button
-                x:Name="PaidButton"
-                Text="Paid"
-                BackgroundColor="#81C784"
-                TextColor="Black" />
-
-            <Button
                 x:Name="ClosePartyButton"
                 Text="Close Party"
                 BackgroundColor="#4CAF50"

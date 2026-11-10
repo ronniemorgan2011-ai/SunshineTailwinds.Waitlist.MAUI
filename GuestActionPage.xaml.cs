@@ -12,7 +12,6 @@ public partial class GuestActionPage : ContentPage
 
         SeatGuestButton.Clicked += Action_Clicked;
         OrdersInButton.Clicked += Action_Clicked;
-        PaidButton.Clicked += Action_Clicked;
         ClosePartyButton.Clicked += Action_Clicked;
         ReturnWaitingButton.Clicked += Action_Clicked;
         EditButton.Clicked += Action_Clicked;

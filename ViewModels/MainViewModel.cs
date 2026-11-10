@@ -224,18 +224,6 @@ public class MainViewModel : INotifyPropertyChanged
         LoadGuests();
     }
 
-    public void MarkGuestPaid()
-    {
-        if (SelectedGuest == null)
-            return;
-
-        SelectedGuest.Status = "Paid";
-
-        _database.UpdateGuest(SelectedGuest);
-
-        LoadGuests();
-    }
-
     public void CloseSelectedGuest()
     {
         if (SelectedGuest == null)

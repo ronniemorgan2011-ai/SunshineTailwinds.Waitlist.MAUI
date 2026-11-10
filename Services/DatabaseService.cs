@@ -156,8 +156,7 @@ public class DatabaseService
             .Where(g =>
                 g.Status == "Waiting" ||
                 g.Status == "Seated" ||
-                g.Status == "Orders In" ||
-                g.Status == "Paid")
+                g.Status == "Orders In")
             .OrderBy(g => g.SortOrder)
             .ToList();
     }
