@@ -28,10 +28,9 @@ public partial class MainPage : ContentPage
         BindingContext = null;
         BindingContext = _viewModel;
     }
-
-    private void AddGuest_Clicked(
-        object sender,
-        EventArgs e)
+     private void AddGuest_Clicked(
+     object? sender,
+     EventArgs e)
     {
         int adults = 0;
         int children = 0;
@@ -53,7 +52,7 @@ public partial class MainPage : ContentPage
     }
 
     private async void AssignTable_Clicked(
-        object sender,
+        object? sender,
         EventArgs e)
     {
         string result =
@@ -61,7 +60,7 @@ public partial class MainPage : ContentPage
 
         if (!string.IsNullOrWhiteSpace(result))
         {
-            await DisplayAlert(
+            await DisplayAlertAsync(
                 "Table Assignment",
                 result,
                 "OK");
@@ -74,7 +73,7 @@ public partial class MainPage : ContentPage
 
 
     private async void SeatGuest_Clicked(
-        object sender,
+        object? sender,
         EventArgs e)
     {
         string result =
@@ -82,7 +81,7 @@ public partial class MainPage : ContentPage
 
         if (!string.IsNullOrWhiteSpace(result))
         {
-            await DisplayAlert(
+            await DisplayAlertAsync(
                 "Seat Guest",
                 result,
                 "OK");
@@ -94,7 +93,7 @@ public partial class MainPage : ContentPage
     }
 
     private void OrdersIn_Clicked(
-        object sender,
+        object? sender,
         EventArgs e)
     {
         _viewModel.OrdersInSelectedGuest();
@@ -103,7 +102,7 @@ public partial class MainPage : ContentPage
     }
 
     private void CloseParty_Clicked(
-        object sender,
+        object? sender,
         EventArgs e)
     {
         _viewModel.CloseSelectedGuest();
@@ -112,7 +111,7 @@ public partial class MainPage : ContentPage
     }
 
     private void RemoveGuest_Clicked(
-        object sender,
+        object? sender,
         EventArgs e)
     {
         _viewModel.RemoveSelectedGuest();
@@ -121,15 +120,15 @@ public partial class MainPage : ContentPage
     }
 
     private async void ClearGuests_Clicked(
-        object sender,
+        object? sender,
         EventArgs e)
     {
         bool answer =
-            await DisplayAlert(
-                "Clear All Guests",
-                "Are you sure you want to remove ALL guests from the waitlist?",
-                "Yes",
-                "No");
+        await DisplayAlertAsync(
+            "Clear All Guests",
+            "Are you sure you want to remove ALL guests from the waitlist?",
+            "Yes",
+            "No");
 
         if (!answer)
             return;
@@ -138,7 +137,7 @@ public partial class MainPage : ContentPage
     }
 
     private async void GuestActionMenu_Clicked(
-        object sender,
+        object? sender,
         EventArgs e)
     {
         if (sender is not Button button)

@@ -28,7 +28,7 @@ public partial class EditGuestPage : ContentPage
     }
 
     private async void Save_Clicked(
-        object sender,
+        object? sender,
         EventArgs e)
     {
         int adults = 0;
@@ -50,7 +50,7 @@ public partial class EditGuestPage : ContentPage
     }
 
     private async void Cancel_Clicked(
-        object sender,
+        object? sender,
         EventArgs e)
     {
         await Navigation.PopModalAsync();

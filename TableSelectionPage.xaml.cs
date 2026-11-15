@@ -90,10 +90,10 @@ public partial class TableSelectionPage : ContentPage
 
                 if (activeGuest && occupied)
                 {
-                    await DisplayAlert(
-                        "Table Occupied",
-                        $"Table {table.Name} is currently occupied.",
-                        "OK");
+                    await DisplayAlertAsync(
+                    "Table Occupied",
+                    $"Table {table.Name} is currently occupied.",
+                    "OK");
 
                     return;
                 }
@@ -117,7 +117,7 @@ public partial class TableSelectionPage : ContentPage
     }
 
     private async void Cancel_Clicked(
-        object sender,
+        object? sender,
         EventArgs e)
     {
         await Navigation.PopModalAsync();

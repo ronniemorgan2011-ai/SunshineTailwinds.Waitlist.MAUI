@@ -32,7 +32,7 @@ public partial class GuestActionPage : ContentPage
         return _tcs.Task;
     }
 
-    private async void Action_Clicked(object sender, EventArgs e)
+    private async void Action_Clicked(object? sender, EventArgs e)
     {
         if (sender is Button button)
         {

@@ -58,14 +58,14 @@ public partial class ManageTablesPage : ContentPage
     }
 
     private void ShowDisabled_Changed(
-        object sender,
+        object? sender,
         CheckedChangedEventArgs e)
     {
         LoadTables();
     }
 
     private async void RenameTable_Clicked(
-        object sender,
+        object? sender,
         EventArgs e)
     {
         if (TablePicker.SelectedItem is not TableInfo table)
@@ -87,7 +87,7 @@ public partial class ManageTablesPage : ContentPage
 
         if (exists)
         {
-            await DisplayAlert(
+            await DisplayAlertAsync(
                 "Rename Table",
                 "A table with that name already exists.",
                 "OK");
@@ -105,7 +105,7 @@ public partial class ManageTablesPage : ContentPage
     }
 
     private async void AddTable_Clicked(
-        object sender,
+        object? sender,
         EventArgs e)
     {
         var tableName =
@@ -123,7 +123,7 @@ public partial class ManageTablesPage : ContentPage
 
         if (exists)
         {
-            await DisplayAlert(
+            await DisplayAlertAsync(
                 "Duplicate Table",
                 "Table already exists.",
                 "OK");
@@ -144,7 +144,7 @@ public partial class ManageTablesPage : ContentPage
     }
 
     private void DisableTable_Clicked(
-        object sender,
+        object? sender,
         EventArgs e)
     {
         if (TablePicker.SelectedItem is not TableInfo table)
@@ -156,7 +156,7 @@ public partial class ManageTablesPage : ContentPage
     }
 
     private void EnableTable_Clicked(
-        object sender,
+        object? sender,
         EventArgs e)
     {
         if (TablePicker.SelectedItem is not TableInfo table)
