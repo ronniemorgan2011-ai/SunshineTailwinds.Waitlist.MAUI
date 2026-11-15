@@ -23,7 +23,12 @@ public class Guest
     public string TimeAdded { get; set; } = "";
 
     public DateTime TimeAddedDate { get; set; }
+    public DateTime? OrdersInDate { get; set; }
+    
+    public DateTime? ReservationDateTime { get; set; }
     public int SortOrder { get; set; }
+
+
 
     [Ignore]
     public int WaitMinutes
@@ -42,17 +47,35 @@ public class Guest
     public string HighChairDisplay =>
         HighChairRequired ? "✓" : "";
     [Ignore]
-    public string GuestDisplay =>
-    HighChairRequired
-        ? $"{GuestName} 🪑"
-        : GuestName;
+    public string GuestDisplay
+    {
+        get
+        {
+            string displayName = GuestName;
+
+            if (Status == "Reserved" &&
+                ReservationDateTime.HasValue)
+            {
+                displayName +=
+                    $" (RES. @ {ReservationDateTime.Value:h:mm tt})";
+            }
+
+            if (HighChairRequired)
+            {
+                displayName += " 🪑";
+            }
+
+            return displayName;
+        }
+    }
 
     [Ignore]
     public Color StatusColor =>
-     Status switch
-     {
-         "Seated" => Color.FromArgb("#FFE082"),
-         "Orders In" => Color.FromArgb("#F48FB1"),
-         _ => Colors.Transparent
-     };
+ Status switch
+ {
+     "Reserved" => Color.FromArgb("#B3E5FC"),
+     "Seated" => Color.FromArgb("#FFE082"),
+     "Orders In" => Color.FromArgb("#F48FB1"),
+     _ => Colors.Transparent
+ };
 }

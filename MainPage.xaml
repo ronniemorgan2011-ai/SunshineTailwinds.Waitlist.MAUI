@@ -60,9 +60,15 @@
                         </HorizontalStackLayout>
 
                         <Button
-                    Text="Add Guest"
-                    WidthRequest="140"
-                    Clicked="AddGuest_Clicked" />
+                         Text="Add Guest"
+                         WidthRequest="140"
+                         Clicked="AddGuest_Clicked" />
+                        
+                        <Button
+                        Text="Reservation"
+                        Clicked="AddReservation_Clicked"
+                        BackgroundColor="#B3E5FC"
+                        TextColor="Black" />
 
                     </HorizontalStackLayout>
 

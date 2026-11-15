@@ -37,24 +37,32 @@
             <HorizontalStackLayout>
 
                 <CheckBox
-                    x:Name="chkHighChair" />
+        x:Name="chkHighChair" />
 
                 <Label
-                    Text="High Chair"
-                    VerticalOptions="Center" />
+        Text="High Chair"
+        VerticalOptions="Center" />
 
             </HorizontalStackLayout>
 
-            <Button
-                Text="Save Changes"
-                Clicked="Save_Clicked" />
+            <VerticalStackLayout
+    x:Name="ReservationLayout"
+    IsVisible="False">
+
+                <Label
+        Text="Reservation Time" />
+
+                <TimePicker
+        x:Name="reservationTimePicker" />
+
+            </VerticalStackLayout>
 
             <Button
-                Text="Cancel"
-                Clicked="Cancel_Clicked" />
+    Text="Save Changes"
+    Clicked="Save_Clicked" />
 
         </VerticalStackLayout>
-
+        
     </ScrollView>
 
 </ContentPage>

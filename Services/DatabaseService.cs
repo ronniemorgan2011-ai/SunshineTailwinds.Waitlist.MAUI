@@ -154,6 +154,7 @@ public class DatabaseService
     {
         return _database.Table<Guest>()
             .Where(g =>
+                g.Status == "Reserved" ||
                 g.Status == "Waiting" ||
                 g.Status == "Seated" ||
                 g.Status == "Orders In")

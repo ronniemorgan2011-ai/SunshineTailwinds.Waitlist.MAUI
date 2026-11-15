@@ -25,7 +25,17 @@ public partial class EditGuestPage : ContentPage
         txtAdults.Text = guest.Adults.ToString();
         txtChildren.Text = guest.Children.ToString();
         chkHighChair.IsChecked = guest.HighChairRequired;
-    }
+        if (guest.Status == "Reserved")
+        {
+            ReservationLayout.IsVisible = true;
+
+            if (guest.ReservationDateTime.HasValue)
+            {
+                reservationTimePicker.Time =
+                    guest.ReservationDateTime.Value.TimeOfDay;
+            }
+        }
+            }
 
     private async void Save_Clicked(
         object? sender,
@@ -41,6 +51,12 @@ public partial class EditGuestPage : ContentPage
         _guest.Adults = adults;
         _guest.Children = children;
         _guest.HighChairRequired = chkHighChair.IsChecked;
+        if (_guest.Status == "Reserved")
+        {
+            _guest.ReservationDateTime =
+                DateTime.Today +
+                reservationTimePicker.Time;
+        }
 
         _database.UpdateGuest(_guest);
 

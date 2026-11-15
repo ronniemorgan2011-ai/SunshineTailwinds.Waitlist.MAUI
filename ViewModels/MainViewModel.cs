@@ -97,11 +97,48 @@ public class MainViewModel : INotifyPropertyChanged
     {
         Guests.Clear();
 
-        foreach (var guest in _database.GetGuests())
+        var allGuests = _database.GetGuests();
+
+        // Auto close Orders In guests after 2 hours
+        foreach (var guest in allGuests)
+        {
+            bool autoClose =
+                guest.Status == "Orders In"
+                &&
+                guest.OrdersInDate.HasValue
+                &&
+                DateTime.Now - guest.OrdersInDate.Value >
+                TimeSpan.FromHours(2);
+
+            if (autoClose)
+            {
+                guest.Status = "Closed";
+                _database.UpdateGuest(guest);
+            }
+        }
+
+        // Reload after auto-closing
+        allGuests = _database.GetGuests();
+
+        var reservations =
+            allGuests
+                .Where(g => g.Status == "Reserved")
+                .OrderBy(g => g.ReservationDateTime);
+
+        var regularGuests =
+            allGuests
+                .Where(g => g.Status != "Reserved")
+                .OrderBy(g => g.SortOrder);
+
+        foreach (var guest in reservations)
         {
             Guests.Add(guest);
         }
 
+        foreach (var guest in regularGuests)
+        {
+            Guests.Add(guest);
+        }
         OnPropertyChanged(nameof(WaitingCount));
         OnPropertyChanged(nameof(SeatedCount));
         OnPropertyChanged(nameof(GuestCount));
@@ -219,6 +256,8 @@ public class MainViewModel : INotifyPropertyChanged
 
         SelectedGuest.Status = "Orders In";
 
+        SelectedGuest.OrdersInDate = DateTime.Now;
+
         _database.UpdateGuest(SelectedGuest);
 
         LoadGuests();
@@ -299,6 +338,33 @@ public class MainViewModel : INotifyPropertyChanged
 
         _database.UpdateGuest(SelectedGuest);
         _database.UpdateGuest(guestBelow);
+
+        LoadGuests();
+    }
+
+    public void AddReservation(
+    string guestName,
+    int adults,
+    int children,
+    bool highChair,
+    DateTime reservationTime)
+    {
+        if (string.IsNullOrWhiteSpace(guestName))
+            return;
+
+        Guest guest = new()
+        {
+            GuestName = guestName,
+            Adults = adults,
+            Children = children,
+            HighChairRequired = highChair,
+            Status = "Reserved",
+            ReservationDateTime = reservationTime,
+            TimeAddedDate = DateTime.Now,
+            TimeAdded = DateTime.Now.ToShortTimeString()
+        };
+
+        _database.AddGuest(guest);
 
         LoadGuests();
     }

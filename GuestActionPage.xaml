@@ -31,16 +31,16 @@
                 TextColor="White" />
 
             <Button
+                x:Name="PreSeatButton"
+                Text="Assign Table" />
+
+            <Button
                 x:Name="ReturnWaitingButton"
                 Text="Return To Waiting" />
 
             <Button
                 x:Name="EditButton"
                 Text="Edit Entry" />
-
-            <Button
-                x:Name="PreSeatButton"
-                Text="Assign Table" />
 
             <Button
                 x:Name="MoveUpButton"

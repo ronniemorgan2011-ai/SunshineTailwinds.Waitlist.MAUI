@@ -14,6 +14,17 @@ public partial class MainPage : ContentPage
         _viewModel = new MainViewModel();
 
         BindingContext = _viewModel;
+
+        Dispatcher.StartTimer(
+            TimeSpan.FromMinutes(1),
+            () =>
+            {
+                _viewModel.LoadGuests();
+
+                RefreshBindings();
+
+                return true;
+            });
     }
 
     protected override void OnAppearing()
@@ -43,6 +54,45 @@ public partial class MainPage : ContentPage
             adults,
             children,
             chkHighChair.IsChecked);
+
+        txtGuestName.Text = "";
+        txtAdults.Text = "";
+        txtChildren.Text = "";
+
+        RefreshBindings();
+    }
+
+    private async void AddReservation_Clicked(
+    object? sender,
+    EventArgs e)
+    {
+        int adults = 0;
+        int children = 0;
+
+        int.TryParse(txtAdults.Text, out adults);
+        int.TryParse(txtChildren.Text, out children);
+
+        var reservationPage =
+            new ReservationPage();
+
+        await Navigation.PushModalAsync(
+            reservationPage);
+
+        await reservationPage.WaitForCloseAsync();
+
+        if (!reservationPage.SelectedTime.HasValue)
+            return;
+
+        DateTime reservationTime =
+            DateTime.Today +
+            reservationPage.SelectedTime.Value;
+
+        _viewModel.AddReservation(
+            txtGuestName.Text ?? "",
+            adults,
+            children,
+            chkHighChair.IsChecked,
+            reservationTime);
 
         txtGuestName.Text = "";
         txtAdults.Text = "";
@@ -228,5 +278,5 @@ public partial class MainPage : ContentPage
                 RefreshBindings();
                 break;
         }
-    }
+        }
 }
