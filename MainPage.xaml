@@ -3,6 +3,7 @@
 <ContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:SunshineTailwinds.Waitlist.MAUI.Views"
     x:Class="SunshineTailwinds.Waitlist.MAUI.MainPage">
 
     <ScrollView
@@ -29,46 +30,50 @@
                     <HorizontalStackLayout
                         Spacing="10"
                         HorizontalOptions="Center">
-                        
+
                         <Entry
                     x:Name="txtGuestName"
                     Placeholder="Guest Name"
                     WidthRequest="250" />
 
                         <Entry
-                    x:Name="txtAdults"
-                    Placeholder="Adults"
-                    Keyboard="Numeric"
-                    WidthRequest="90" />
+                        x:Name="txtAdults"
+                        Keyboard="Numeric"
+                        ReturnType="Done" />
 
                         <Entry
-                    x:Name="txtChildren"
-                    Placeholder="Children"
-                    Keyboard="Numeric"
-                    WidthRequest="90" />
+                        x:Name="txtChildren"
+                        Keyboard="Numeric"
+                        ReturnType="Done" />
 
                         <HorizontalStackLayout
-                    VerticalOptions="Center">
+                        VerticalOptions="Center">
 
                             <CheckBox
-                        x:Name="chkHighChair" />
+                                x:Name="chkHighChair" />
 
                             <Label
-                        Text="High Chair"
-                        VerticalOptions="Center" />
+                                Text="High Chair"
+                                VerticalOptions="Center" />
 
                         </HorizontalStackLayout>
 
-                        <Button
-                         Text="Add Guest"
-                         WidthRequest="140"
-                         Clicked="AddGuest_Clicked" />
-                        
-                        <Button
-                        Text="Reservation"
-                        Clicked="AddReservation_Clicked"
-                        BackgroundColor="#B3E5FC"
-                        TextColor="Black" />
+                        <VerticalStackLayout
+                        Spacing="10">
+
+                            <Button
+                            Text="Add Guest"
+                            Clicked="AddGuest_Clicked"
+                            BackgroundColor="#B39DDB"
+                            HeightRequest="50" />
+
+                            <Button
+                            Text="Reservation"
+                            Clicked="AddReservation_Clicked"
+                            BackgroundColor="#B3E5FC"
+                            HeightRequest="50" />
+
+                        </VerticalStackLayout>
 
                     </HorizontalStackLayout>
 
@@ -83,14 +88,20 @@
                 StringFormat='Selected Guest: {0}'}"
                 FontSize="18"
                 VerticalOptions="Center" />
-                
+
                 <Button
                     Grid.Column="1"
                     Text="End of Day"
                     Clicked="ClearGuests_Clicked" />
+                
 
+                <!-- Active Waitlist Starts Here -->
             </Grid>
-            <Border
+            <Grid
+    ColumnDefinitions="*,*"
+    ColumnSpacing="15">
+             <Border
+                Grid.Column="0"
                 Stroke="Gray"
                 Padding="15">
 
@@ -106,12 +117,12 @@
     Padding="5">
 
                         <Label Grid.Column="0" Text="Guest" FontAttributes="Bold"/>
-                            <Label Grid.Column="1" Text="Ad" FontAttributes="Bold"/>
-                                <Label Grid.Column="2" Text="Kids" FontAttributes="Bold"/>
-                                  <Label Grid.Column="3" Text="Time" FontAttributes="Bold"/>
-                                    <Label Grid.Column="4" Text="Status" FontAttributes="Bold"/>
-                                        <Label Grid.Column="5" Text="Tbl" FontAttributes="Bold"/>
-                                            <Label Grid.Column="6" Text="⋮" FontAttributes="Bold" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                        <Label Grid.Column="1" Text="Ad" FontAttributes="Bold"/>
+                        <Label Grid.Column="2" Text="Kids" FontAttributes="Bold"/>
+                        <Label Grid.Column="3" Text="Time" FontAttributes="Bold"/>
+                        <Label Grid.Column="4" Text="Status" FontAttributes="Bold"/>
+                        <Label Grid.Column="5" Text="Tbl" FontAttributes="Bold"/>
+                        <Label Grid.Column="6" Text="⋮" FontAttributes="Bold" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
 
                     </Grid>
 
@@ -121,6 +132,7 @@
                         Margin="0,0,0,5"/>
 
                     <CollectionView
+                        HeightRequest="700"
                         ItemsSource="{Binding Guests}"
                         SelectionMode="Single"
                         SelectedItem="{Binding SelectedGuest}">
@@ -132,7 +144,7 @@
                                 <Grid
                 ColumnDefinitions="2.5*,0.8*,0.8*,1.0*,1.4*,0.8*,0.7*"
                 Padding="5">
-                    <Label Grid.Column="0" Text="{Binding GuestDisplay}" FontSize="16" />
+                                    <Label Grid.Column="0" Text="{Binding GuestDisplay}" FontSize="16" />
 
                                     <Label
                     Grid.Column="1"
@@ -144,7 +156,7 @@
                     Text="{Binding Children}"
                     FontSize="16" />
 
-                    <Label
+                                    <Label
                         Grid.Column="3"
                         Text="{Binding TimeAdded}"
                         FontSize="16" />
@@ -200,6 +212,13 @@
                 </VerticalStackLayout>
 
             </Border>
+            <!-- Active Waitlist Ends Here -->
+            <!-- Seating Chart Begins Here -->
+                <views:SeatingChartView
+                Grid.Column="1"
+                x:Name="SeatingChart" />
+
+            </Grid>
 
         </VerticalStackLayout>
 

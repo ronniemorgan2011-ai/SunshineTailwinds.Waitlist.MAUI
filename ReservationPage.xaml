@@ -14,9 +14,9 @@
             FontAttributes="Bold"
             HorizontalOptions="Center" />
 
-        <TimePicker
+        <Picker
             x:Name="ReservationTimePicker"
-            Time="17:00:00" />
+            Title="Select Reservation Time" />
 
         <Button
             Text="Save"

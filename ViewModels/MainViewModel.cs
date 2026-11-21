@@ -181,24 +181,17 @@ public class MainViewModel : INotifyPropertyChanged
         if (SelectedTable == null)
             return "No table selected.";
 
-        // Allow hosts to pre-assign tables
-        //bool tableAlreadyAssigned =
-          //  Guests.Any(g =>
-            //    g.Id != SelectedGuest.Id &&
-              //  g.TableNumber == SelectedTable.Name &&
-                //(g.Status == "Seated" ||
-                // g.Status == "Orders In"));
-
-       // if (tableAlreadyAssigned)
-        //{
-         //   return $"Table {SelectedTable.Name} is already assigned.";
-        // }
-
         SelectedGuest.TableNumber = SelectedTable.Name;
 
         _database.UpdateGuest(SelectedGuest);
 
+        var selectedGuestId = SelectedGuest.Id;
+
         LoadGuests();
+
+        SelectedGuest =
+            Guests.FirstOrDefault(
+                g => g.Id == selectedGuestId);
 
         return "";
     }

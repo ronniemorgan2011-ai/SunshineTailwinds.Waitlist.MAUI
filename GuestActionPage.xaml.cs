@@ -13,12 +13,9 @@ public partial class GuestActionPage : ContentPage
         SeatGuestButton.Clicked += Action_Clicked;
         OrdersInButton.Clicked += Action_Clicked;
         ClosePartyButton.Clicked += Action_Clicked;
-        ReturnWaitingButton.Clicked += Action_Clicked;
-        EditButton.Clicked += Action_Clicked;
         PreSeatButton.Clicked += Action_Clicked;
-        MoveUpButton.Clicked += Action_Clicked;
-        MoveDownButton.Clicked += Action_Clicked;
-        RemoveButton.Clicked += Action_Clicked;
+        MoreOptionsButton.Clicked += Action_Clicked;
+
 
         CancelButton.Clicked += async (s, e) =>
         {

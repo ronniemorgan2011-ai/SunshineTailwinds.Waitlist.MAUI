@@ -10,6 +10,26 @@ public partial class ReservationPage : ContentPage
     public ReservationPage()
     {
         InitializeComponent();
+
+        PopulateTimes();
+    }
+
+    private void PopulateTimes()
+    {
+        var startTime = new TimeSpan(6, 0, 0);
+        var endTime = new TimeSpan(14, 0, 0);
+
+        for (var time = startTime;
+             time <= endTime;
+             time = time.Add(TimeSpan.FromMinutes(15)))
+        {
+            ReservationTimePicker.Items.Add(
+                DateTime.Today
+                    .Add(time)
+                    .ToString("h:mm tt"));
+        }
+
+        ReservationTimePicker.SelectedIndex = 0;
     }
 
     public Task WaitForCloseAsync()
@@ -21,8 +41,25 @@ public partial class ReservationPage : ContentPage
         object? sender,
         EventArgs e)
     {
-        SelectedTime =
-            ReservationTimePicker.Time;
+        if (ReservationTimePicker.SelectedIndex < 0)
+        {
+            await DisplayAlertAsync(
+                "Reservation Time",
+                "Please select a reservation time.",
+                "OK");
+
+            return;
+        }
+
+        string selectedTime =
+            ReservationTimePicker
+                .Items[
+                    ReservationTimePicker.SelectedIndex];
+
+        DateTime parsedTime =
+            DateTime.Parse(selectedTime);
+
+        SelectedTime = parsedTime.TimeOfDay;
 
         _tcs.TrySetResult(true);
 

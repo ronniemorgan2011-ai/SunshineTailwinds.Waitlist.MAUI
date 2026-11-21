@@ -15,6 +15,16 @@ public partial class MainPage : ContentPage
 
         BindingContext = _viewModel;
 
+        txtAdults.Completed += (s, e) =>
+        {
+            txtAdults.Unfocus();
+        };
+
+        txtChildren.Completed += (s, e) =>
+        {
+            txtChildren.Unfocus();
+        };
+
         Dispatcher.StartTimer(
             TimeSpan.FromMinutes(1),
             () =>
@@ -32,14 +42,18 @@ public partial class MainPage : ContentPage
         base.OnAppearing();
 
         _viewModel.LoadTables();
+
+        SeatingChart.ViewModel = _viewModel;
     }
 
     private void RefreshBindings()
     {
         BindingContext = null;
         BindingContext = _viewModel;
+
+        SeatingChart.RefreshChart();
     }
-     private void AddGuest_Clicked(
+    private void AddGuest_Clicked(
      object? sender,
      EventArgs e)
     {
@@ -60,6 +74,7 @@ public partial class MainPage : ContentPage
         txtChildren.Text = "";
 
         RefreshBindings();
+        SeatingChart.RefreshChart();
     }
 
     private async void AddReservation_Clicked(
@@ -119,6 +134,8 @@ public partial class MainPage : ContentPage
         }
 
         RefreshBindings();
+
+        SeatingChart.RefreshChart();
     }
 
 
@@ -132,14 +149,16 @@ public partial class MainPage : ContentPage
         if (!string.IsNullOrWhiteSpace(result))
         {
             await DisplayAlertAsync(
-                "Seat Guest",
-                result,
-                "OK");
+    "DEBUG",
+    "SeatGuest_Clicked fired",
+    "OK");
 
             return;
         }
 
         RefreshBindings();
+
+        SeatingChart.RefreshChart();
     }
 
     private void OrdersIn_Clicked(
@@ -149,6 +168,8 @@ public partial class MainPage : ContentPage
         _viewModel.OrdersInSelectedGuest();
 
         RefreshBindings();
+
+        SeatingChart.RefreshChart();
     }
 
     private void CloseParty_Clicked(
@@ -158,6 +179,8 @@ public partial class MainPage : ContentPage
         _viewModel.CloseSelectedGuest();
 
         RefreshBindings();
+
+        SeatingChart.RefreshChart();
     }
 
     private void RemoveGuest_Clicked(
@@ -184,6 +207,10 @@ public partial class MainPage : ContentPage
             return;
 
         _viewModel.ClearGuests();
+
+        RefreshBindings();
+
+        SeatingChart.RefreshChart();
     }
 
     private async void GuestActionMenu_Clicked(
@@ -209,7 +236,7 @@ public partial class MainPage : ContentPage
         switch (action)
         {
 
-            case "Seat Guest":
+            case "🍽️ Seat Guest":
 
                 if (string.IsNullOrWhiteSpace(guest.TableNumber))
                 {
@@ -227,11 +254,11 @@ public partial class MainPage : ContentPage
                 SeatGuest_Clicked(sender, EventArgs.Empty);
                 break;
 
-            case "Orders In":
+            case "🍳 Orders In":
                 OrdersIn_Clicked(sender, EventArgs.Empty);
                 break;
 
-            case "Close Party":
+            case "✅ Close Party":
                 CloseParty_Clicked(sender, EventArgs.Empty);
                 break;
 
@@ -242,6 +269,7 @@ public partial class MainPage : ContentPage
             case "Return To Waiting":
                 _viewModel.ReturnGuestToWaiting();
                 RefreshBindings();
+                SeatingChart.RefreshChart();
                 break;
 
             case "Edit Entry":
@@ -255,7 +283,7 @@ public partial class MainPage : ContentPage
 
                 break;
 
-            case "Assign Table":
+            case "📝 Assign Table":
 
                 await Task.Delay(250);
 
@@ -276,6 +304,53 @@ public partial class MainPage : ContentPage
 
                 _viewModel.MoveSelectedGuestDown();
                 RefreshBindings();
+                break;
+
+            case "⚙️ More Options":
+
+                string moreAction =
+                    await DisplayActionSheetAsync(
+                        "More Options",
+                        "Cancel",
+                        null,
+                        "Return To Waiting",
+                        "Edit Entry",
+                        "Move Up",
+                        "Move Down",
+                        "Remove Guest");
+
+                switch (moreAction)
+                {
+                    case "Return To Waiting":
+                        _viewModel.ReturnGuestToWaiting();
+                        RefreshBindings();
+                        break;
+
+                    case "Edit Entry":
+
+                        await Navigation.PushModalAsync(
+                            new EditGuestPage(
+                                guest,
+                                RefreshBindings));
+
+                        break;
+
+                    case "Move Up":
+                        _viewModel.MoveSelectedGuestUp();
+                        RefreshBindings();
+                        break;
+
+                    case "Move Down":
+                        _viewModel.MoveSelectedGuestDown();
+                        RefreshBindings();
+                        break;
+
+                    case "Remove Guest":
+                        _viewModel.RemoveSelectedGuest();
+                        RefreshBindings();
+                        break;
+                }
+
                 break;
         }
         }
