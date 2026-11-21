@@ -22,7 +22,7 @@ jobs:
           xcode-version: latest-stable
 
       - name: Install MAUI workload
-        run: dotnet workload install maui --version 10.0.401
+        run: dotnet workload install maui
 
       - name: Install Apple Certificate
         env:
