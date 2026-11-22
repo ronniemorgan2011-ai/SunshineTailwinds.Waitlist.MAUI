@@ -98,7 +98,12 @@ public partial class SeatingChartView : ContentView
     ChartLayout.Height / DesignHeight);
 
         if (scale <= 0)
-            scale = 1;
+        {
+            scale = Width / DesignWidth;
+
+            if (scale <= 0)
+                scale = 1;
+        }
         scale = Math.Min(scale, 1.0);
         scale *= 0.85;
         var guests = _database.GetAllGuests();

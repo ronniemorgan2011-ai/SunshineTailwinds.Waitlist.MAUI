@@ -26,8 +26,8 @@
 
                 <AbsoluteLayout
                      x:Name="ChartLayout"
-                     WidthRequest="850"
-                     HeightRequest="850">
+                     HorizontalOptions="Fill"
+                     VerticalOptions="Fill">
 
                 </AbsoluteLayout>
 
