@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: macos-15
 
     steps:
       - uses: actions/checkout@v4
@@ -17,10 +17,10 @@ jobs:
       - name: Select Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: latest-stable
+          xcode-version: '26.0'
 
       - name: Install MAUI workload
-        run: dotnet workload install maui --version 10.0.401
+        run: dotnet workload install maui
 
       - name: Install Distribution Certificate
         env:
