@@ -10,14 +10,21 @@ public partial class SeatingChartView : ContentView
     public MainViewModel? ViewModel { get; set; }
     public MainPage? ParentPage { get; set; }
 
+    private const double DesignWidth = 850;
+    private const double DesignHeight = 850;
+
     public SeatingChartView()
     {
         InitializeComponent();
 
-        AddDemoTables();
+        SizeChanged += SeatingChartView_SizeChanged;
+    }
 
+    private void SeatingChartView_SizeChanged(
+    object? sender,
+    EventArgs e)
+    {
         RefreshChart();
-
     }
     public void RefreshChart()
     {
@@ -86,6 +93,12 @@ public partial class SeatingChartView : ContentView
     double x,
     double y)
     {
+        double scale = Math.Min(
+    ChartLayout.Width / DesignWidth,
+    ChartLayout.Height / DesignHeight);
+
+        if (scale <= 0)
+            scale = 1;
         var guests = _database.GetAllGuests();
 
         var guestAtTable =
@@ -111,8 +124,8 @@ public partial class SeatingChartView : ContentView
         Button button = new()
         {
             Text = tableNumber,
-            WidthRequest = 85,
-            HeightRequest = 60,
+            WidthRequest = 85 * scale,
+            HeightRequest = 60 * scale,
             BackgroundColor = tableColor
         };
 
@@ -120,7 +133,11 @@ public partial class SeatingChartView : ContentView
 
         AbsoluteLayout.SetLayoutBounds(
             button,
-            new Rect(x, y, 95, 70));
+            new Rect(
+                x * scale,
+                y * scale,
+                95 * scale,
+                70 * scale));
 
         ChartLayout.Children.Add(button);
     }
