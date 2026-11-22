@@ -355,6 +355,7 @@ public partial class MainPage : ContentPage
 
                 break;
         }
+        _viewModel.SelectedGuest = null;
     }
     private async void GuestActionMenu_Clicked(
         object? sender,

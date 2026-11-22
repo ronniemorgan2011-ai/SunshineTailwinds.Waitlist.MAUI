@@ -237,6 +237,7 @@ public class MainViewModel : INotifyPropertyChanged
             return;
 
         SelectedGuest.Status = "Waiting";
+        SelectedGuest.TableNumber = "";
 
         _database.UpdateGuest(SelectedGuest);
 
