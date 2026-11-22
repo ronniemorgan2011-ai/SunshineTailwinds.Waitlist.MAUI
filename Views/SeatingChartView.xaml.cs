@@ -99,6 +99,8 @@ public partial class SeatingChartView : ContentView
 
         if (scale <= 0)
             scale = 1;
+        scale = Math.Min(scale, 1.0);
+        scale *= 0.85;
         var guests = _database.GetAllGuests();
 
         var guestAtTable =
