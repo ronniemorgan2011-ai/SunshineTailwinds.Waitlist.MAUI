@@ -28,56 +28,55 @@ public partial class SeatingChartView : ContentView
         });
     }
 
-
     private void AddDemoTables()
     {
         // Upper right
-        CreateTable("15", 560, 40);
-        CreateTable("14", 660, 40);
-        CreateTable("23", 760, 40);
+        CreateTable("15", 520, 40);
+        CreateTable("14", 620, 40);
+        CreateTable("23", 720, 40);
 
-        // 16/13 Columns
-        CreateTable("16B", 560, 130);
-        CreateTable("16A", 560, 220);
+        // 16 / 13
+        CreateTable("16B", 520, 130);
+        CreateTable("16A", 520, 195);
 
-        CreateTable("13B", 760, 130);
-        CreateTable("13A", 760, 220);
+        CreateTable("13B", 720, 130);
+        CreateTable("13A", 720, 195);
 
-        // 10 / 11 / 12 Area
-        CreateTable("10B", 660, 320);
-        CreateTable("10A", 660, 410);
+        // 10 / 11 / 12
+        CreateTable("10B", 520, 300);
+        CreateTable("10A", 520, 365);
 
-        CreateTable("12", 760, 320);
-        CreateTable("11", 760, 410);
+        CreateTable("12", 720, 300);
+        CreateTable("11", 720, 365);
 
         // 9A / 9B
-        CreateTable("9A", 660, 560);
-        CreateTable("9B", 760, 560);
+        CreateTable("9A", 555, 435);
+        CreateTable("9B", 645, 435);
 
         // Bottom row
-        CreateTable("5A", 560, 720);
-        CreateTable("5B", 660, 720);
-        CreateTable("6", 760, 720);
-        CreateTable("7", 860, 720);
-        CreateTable("8", 960, 720);
+        CreateTable("5A", 350, 510);
+        CreateTable("5B", 450, 510);
+        CreateTable("6", 550, 510);
+        CreateTable("7", 650, 510);
+        CreateTable("8", 750, 510);
 
-        // Top Row
-        CreateTable("22", 140, 180);
-        CreateTable("21", 240, 180);
-        CreateTable("20", 340, 180);
-        CreateTable("19", 440, 180);
+        // Top row
+        CreateTable("22", 0, 180);
+        CreateTable("21", 110, 180);
+        CreateTable("20", 220, 180);
+        CreateTable("19", 320, 180);
 
-        // C tables
-        CreateTable("CTR24", 180, 420);
-        CreateTable("CTR25", 180, 510);
-        CreateTable("CTR26", 180, 600);
-        CreateTable("CTR27", 180, 690);
+        // CTR Stack
+        CreateTable("CTR24", 0, 300);
+        CreateTable("CTR25", 0, 370);
+        CreateTable("CTR26", 0, 440);
+        CreateTable("CTR27", 0, 510);
 
-        // 1-4 stack
-        CreateTable("4", 420, 540);
-        CreateTable("3", 420, 610);
-        CreateTable("2", 420, 680);
-        CreateTable("1", 420, 750);
+        // 1-4 Stack
+        CreateTable("4", 220, 300);
+        CreateTable("3", 220, 370);
+        CreateTable("2", 220, 440);
+        CreateTable("1", 220, 510);
 
     }
 
@@ -86,7 +85,7 @@ public partial class SeatingChartView : ContentView
     double x,
     double y)
     {
-        var guests = _database.GetGuests();
+        var guests = _database.GetAllGuests();
 
         var guestAtTable =
             guests.FirstOrDefault(g =>
@@ -111,8 +110,8 @@ public partial class SeatingChartView : ContentView
         Button button = new()
         {
             Text = tableNumber,
-            WidthRequest = 90,
-            HeightRequest = 65,
+            WidthRequest = 85,
+            HeightRequest = 60,
             BackgroundColor = tableColor
         };
 
@@ -120,7 +119,7 @@ public partial class SeatingChartView : ContentView
 
         AbsoluteLayout.SetLayoutBounds(
             button,
-            new Rect(x, y, 90, 65));
+            new Rect(x, y, 95, 70));
 
         ChartLayout.Children.Add(button);
     }
@@ -136,20 +135,51 @@ public partial class SeatingChartView : ContentView
 
         if (ViewModel == null)
             return;
-        
+
         if (ViewModel.SelectedGuest == null)
-            
         {
+            string action =
+                await Application.Current!
+                .Windows[0]
+                .Page!
+                .DisplayActionSheetAsync(
+                    $"Table {button.Text}",
+                    "Cancel",
+                    null,
+                    "Quick Seat Walk-In");
+
+            if (action != "Quick Seat Walk-In")
+                return;
+
+            var walkInGuest = new Guest
+            {
+                GuestName = $"Walk-In ({button.Text})",
+                Adults = 0,
+                Children = 0,
+                HighChairRequired = false,
+                Status = "Seated",
+                TableNumber = button.Text,
+                TimeAdded = DateTime.Now.ToString("h:mm tt"),
+                TimeAddedDate = DateTime.Now,
+                SortOrder = _database.GetGuests().Count + 1
+            };
+
+            _database.AddGuest(walkInGuest);
+
             await Application.Current!
-            .Windows[0]
-            .Page!
-            .DisplayAlertAsync(
-                "No Guest Selected",
-                "Please select a guest from the waitlist first.",
-                "OK");
+                .Windows[0]
+                .Page!
+                .DisplayAlertAsync(
+                    "Walk-In Seated",
+                    $"{walkInGuest.GuestName} has been seated at Table {button.Text}.",
+                    "OK");
+
+            RefreshChart();
 
             return;
         }
+
+
         string guestName = ViewModel.SelectedGuest.GuestName;
 
         bool answer =
@@ -212,6 +242,6 @@ public partial class SeatingChartView : ContentView
         }
 
         RefreshChart();
-             
+
     }
 }

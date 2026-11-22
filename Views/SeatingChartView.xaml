@@ -22,12 +22,12 @@
 
             <ScrollView
                 Grid.Row="1"
-                Orientation="Both">
+                    IsEnabled="False">
 
                 <AbsoluteLayout
-                    x:Name="ChartLayout"
-                    WidthRequest="850"
-                    HeightRequest="850">
+                     x:Name="ChartLayout"
+                        WidthRequest="850"
+                        HeightRequest="850">
 
                 </AbsoluteLayout>
 

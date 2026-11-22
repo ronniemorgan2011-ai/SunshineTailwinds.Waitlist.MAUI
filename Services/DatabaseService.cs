@@ -154,12 +154,19 @@ public class DatabaseService
     {
         return _database.Table<Guest>()
             .Where(g =>
-                g.Status == "Reserved" ||
-                g.Status == "Waiting" ||
-                g.Status == "Seated" ||
-                g.Status == "Orders In")
+                (g.Status == "Reserved" ||
+                 g.Status == "Waiting" ||
+                 g.Status == "Seated" ||
+                 g.Status == "Orders In")
+                &&
+                !g.GuestName.StartsWith("Walk-In ("))
             .OrderBy(g => g.SortOrder)
             .ToList();
+    }
+
+    public List<Guest> GetAllGuests()
+    {
+        return _database.Table<Guest>().ToList();
     }
 
     public int AddGuest(Guest guest)
