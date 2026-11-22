@@ -22,7 +22,7 @@
 
             <ScrollView
                 Grid.Row="1"
-                    IsEnabled="False">
+                Orientation="Vertical">
 
                 <AbsoluteLayout
                      x:Name="ChartLayout"
