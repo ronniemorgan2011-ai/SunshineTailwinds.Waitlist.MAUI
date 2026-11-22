@@ -39,16 +39,16 @@ public partial class TableSelectionPage : ContentPage
             _database.GetTables();
 
         var guests =
-            _database.GetGuests();
+            _database.GetAllGuests();
 
         foreach (var table in tables)
         {
             var occupyingGuest =
-          guests.FirstOrDefault(g =>
-              g.TableNumber == table.Name &&
-              (g.Status == "Seated" ||
-               g.Status == "Orders In"));
-
+                guests.FirstOrDefault(g =>
+                    g.TableNumber == table.Name &&
+                    (g.Status == "Seated" ||
+                     g.Status == "Orders In" ||
+                     g.Status == "Walk-In"));
 
             var button = new Button
             {
@@ -60,7 +60,8 @@ public partial class TableSelectionPage : ContentPage
 
             if (occupyingGuest != null)
             {
-                if (occupyingGuest.Status == "Seated")
+                if (occupyingGuest.Status == "Seated" ||
+                    occupyingGuest.Status == "Walk-In")
                 {
                     button.BackgroundColor =
                         Color.FromArgb("#FFE082");
@@ -70,19 +71,20 @@ public partial class TableSelectionPage : ContentPage
                     button.BackgroundColor =
                         Color.FromArgb("#F48FB1");
                 }
-                
             }
 
             button.Clicked += async (s, e) =>
             {
-                var guests = _database.GetGuests();
+                var allGuests =
+                    _database.GetAllGuests();
 
                 bool occupied =
-                    guests.Any(g =>
+                    allGuests.Any(g =>
                         g.Id != _guest.Id &&
                         g.TableNumber == table.Name &&
                         (g.Status == "Seated" ||
-                         g.Status == "Orders In"));
+                         g.Status == "Orders In" ||
+                         g.Status == "Walk-In"));
 
                 bool activeGuest =
                     _guest.Status == "Seated" ||
@@ -91,9 +93,9 @@ public partial class TableSelectionPage : ContentPage
                 if (activeGuest && occupied)
                 {
                     await DisplayAlertAsync(
-                    "Table Occupied",
-                    $"Table {table.Name} is currently occupied.",
-                    "OK");
+                        "Table Occupied",
+                        $"Table {table.Name} is currently occupied.",
+                        "OK");
 
                     return;
                 }
@@ -104,7 +106,7 @@ public partial class TableSelectionPage : ContentPage
                 {
                     _guest.Status = "Seated";
                 }
-                
+
                 _database.UpdateGuest(_guest);
 
                 _refreshAction?.Invoke();
@@ -115,7 +117,7 @@ public partial class TableSelectionPage : ContentPage
             TablesContainer.Children.Add(button);
         }
     }
-
+    
     private async void Cancel_Clicked(
         object? sender,
         EventArgs e)

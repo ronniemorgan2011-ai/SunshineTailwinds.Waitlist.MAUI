@@ -10,8 +10,8 @@
         Orientation="Vertical">
 
         <VerticalStackLayout
-    Padding="15"
-    Spacing="10">
+            Padding="15"
+            Spacing="10">
 
             <!-- ADD GUEST -->
 
@@ -22,7 +22,7 @@
                 <VerticalStackLayout
             Spacing="10">
 
-                    <Label
+                <Label
                 Text="Add Guest"
                 FontSize="24"
                 FontAttributes="Bold" />
@@ -58,7 +58,7 @@
 
                         </HorizontalStackLayout>
 
-                        <VerticalStackLayout
+                    <HorizontalStackLayout
                         Spacing="10">
 
                             <Button
@@ -73,15 +73,18 @@
                             BackgroundColor="#B3E5FC"
                             HeightRequest="50" />
 
-                        </VerticalStackLayout>
+                        
+
+                        </HorizontalStackLayout>
 
                     </HorizontalStackLayout>
 
                 </VerticalStackLayout>
-
+             
             </Border>
             <Grid
-                ColumnDefinitions="*,180">
+                ColumnDefinitions="*,140,140"
+                ColumnSpacing="10">
 
                 <Label
                 Text="{Binding SelectedGuest.GuestName,
@@ -90,7 +93,12 @@
                 VerticalOptions="Center" />
 
                 <Button
-                    Grid.Column="1"
+                Grid.Column="1"
+                Text="Clear Guest"
+                Clicked="ClearSelectedGuest_Clicked" />
+
+                <Button
+                    Grid.Column="2"
                     Text="End of Day"
                     Clicked="ClearGuests_Clicked" />
                 
@@ -207,12 +215,12 @@
                         </CollectionView.ItemTemplate>
 
                     </CollectionView>
-
-
+                    
                 </VerticalStackLayout>
 
-            </Border>
-            <!-- Active Waitlist Ends Here -->
+             </Border>
+
+                <!-- Active Waitlist Ends Here -->
             <!-- Seating Chart Begins Here -->
                 <views:SeatingChartView
                 Grid.Column="1"

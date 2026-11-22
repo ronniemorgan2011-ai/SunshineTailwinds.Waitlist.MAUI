@@ -8,6 +8,7 @@ public partial class SeatingChartView : ContentView
 {
     private readonly DatabaseService _database = new();
     public MainViewModel? ViewModel { get; set; }
+    public MainPage? ParentPage { get; set; }
 
     public SeatingChartView()
     {
@@ -138,15 +139,34 @@ public partial class SeatingChartView : ContentView
 
         if (ViewModel.SelectedGuest == null)
         {
+            var occupiedGuest =
+            _database.GetAllGuests()
+            .FirstOrDefault(g =>
+            g.TableNumber == button.Text &&
+            (g.Status == "Seated" ||
+            g.Status == "Orders In"));
+
+            if (occupiedGuest != null)
+            {
+                if (ParentPage != null)
+                {
+                    await ParentPage.ShowGuestActionMenuAsync(
+                        occupiedGuest);
+
+                    RefreshChart();
+
+                    return;
+                }
+            }
             string action =
-                await Application.Current!
-                .Windows[0]
-                .Page!
-                .DisplayActionSheetAsync(
-                    $"Table {button.Text}",
-                    "Cancel",
-                    null,
-                    "Quick Seat Walk-In");
+            await Application.Current!
+             .Windows[0]
+             .Page!
+             .DisplayActionSheetAsync(
+             $"Table {button.Text}",
+             "Cancel",
+             null,
+             "Quick Seat Walk-In");
 
             if (action != "Quick Seat Walk-In")
                 return;
@@ -179,16 +199,15 @@ public partial class SeatingChartView : ContentView
             return;
         }
 
-
-        string guestName = ViewModel.SelectedGuest.GuestName;
-
+        if (ViewModel.SelectedGuest == null)
+            return;
         bool answer =
         await Application.Current!
         .Windows[0]
         .Page!
         .DisplayAlertAsync(
             "Assign & Seat",
-            $"Seat {ViewModel.SelectedGuest.GuestName} at Table {button.Text}?",
+            $"Seat {ViewModel.SelectedGuest!.GuestName} at Table {button.Text}?",
             "Yes",
             "No");
 
@@ -240,6 +259,8 @@ public partial class SeatingChartView : ContentView
 
             return;
         }
+
+        ViewModel.SelectedGuest = null;
 
         RefreshChart();
 

@@ -44,7 +44,10 @@ public partial class MainPage : ContentPage
         _viewModel.LoadTables();
 
         SeatingChart.ViewModel = _viewModel;
+
+        SeatingChart.ParentPage = this;
     }
+
 
     private void RefreshBindings()
     {
@@ -75,6 +78,16 @@ public partial class MainPage : ContentPage
 
         RefreshBindings();
         SeatingChart.RefreshChart();
+    }
+
+    private void ClearSelectedGuest_Clicked(
+    object? sender,
+    EventArgs e)
+    {
+        if (BindingContext is MainViewModel vm)
+        {
+            vm.SelectedGuest = null;
+        }
     }
 
     private async void AddReservation_Clicked(
@@ -213,16 +226,8 @@ public partial class MainPage : ContentPage
         SeatingChart.RefreshChart();
     }
 
-    private async void GuestActionMenu_Clicked(
-        object? sender,
-        EventArgs e)
+    public async Task ShowGuestActionMenuAsync(Guest guest)
     {
-        if (sender is not Button button)
-            return;
-
-        if (button.BindingContext is not Guest guest)
-            return;
-
         _viewModel.SelectedGuest = guest;
 
         var actionPage = new GuestActionPage();
@@ -232,10 +237,9 @@ public partial class MainPage : ContentPage
         await actionPage.WaitForCloseAsync();
 
         string action = actionPage.SelectedAction;
-       
+
         switch (action)
         {
-
             case "🍽️ Seat Guest":
 
                 if (string.IsNullOrWhiteSpace(guest.TableNumber))
@@ -251,19 +255,19 @@ public partial class MainPage : ContentPage
                     return;
                 }
 
-                SeatGuest_Clicked(sender, EventArgs.Empty);
+                SeatGuest_Clicked(null, EventArgs.Empty);
                 break;
 
             case "🍳 Orders In":
-                OrdersIn_Clicked(sender, EventArgs.Empty);
+                OrdersIn_Clicked(null, EventArgs.Empty);
                 break;
 
             case "✅ Close Party":
-                CloseParty_Clicked(sender, EventArgs.Empty);
+                CloseParty_Clicked(null, EventArgs.Empty);
                 break;
 
             case "Remove Guest":
-                RemoveGuest_Clicked(sender, EventArgs.Empty);
+                RemoveGuest_Clicked(null, EventArgs.Empty);
                 break;
 
             case "Return To Waiting":
@@ -295,13 +299,11 @@ public partial class MainPage : ContentPage
                 break;
 
             case "Move Up":
-
                 _viewModel.MoveSelectedGuestUp();
                 RefreshBindings();
                 break;
 
             case "Move Down":
-
                 _viewModel.MoveSelectedGuestDown();
                 RefreshBindings();
                 break;
@@ -353,5 +355,18 @@ public partial class MainPage : ContentPage
 
                 break;
         }
-        }
+    }
+    private async void GuestActionMenu_Clicked(
+        object? sender,
+        EventArgs e)
+    {
+        if (sender is not Button button)
+            return;
+
+        if (button.BindingContext is not Guest guest)
+            return;
+
+        await ShowGuestActionMenuAsync(guest);
+    }
+     
 }

@@ -205,8 +205,9 @@ public class MainViewModel : INotifyPropertyChanged
             return "Please assign a table before seating the guest.";
         }
 
+        var allGuests = _database.GetAllGuests();
         bool tableOccupied =
-        Guests.Any(g =>
+        allGuests.Any(g =>
          g.Id != SelectedGuest.Id &&
          !string.IsNullOrWhiteSpace(g.TableNumber) &&
          !string.IsNullOrWhiteSpace(SelectedGuest.TableNumber) &&
