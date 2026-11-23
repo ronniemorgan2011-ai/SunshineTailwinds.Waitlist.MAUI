@@ -105,7 +105,9 @@ public partial class SeatingChartView : ContentView
                 scale = 1;
         }
         scale = Math.Min(scale, 1.0);
-        scale *= 0.95;
+        scale *= 1.0;
+        System.Diagnostics.Debug.WriteLine(
+        $"Scale = {scale}, Width = {ChartLayout.Width}, Height = {ChartLayout.Height}");
         var guests = _database.GetAllGuests();
 
         var guestAtTable =
