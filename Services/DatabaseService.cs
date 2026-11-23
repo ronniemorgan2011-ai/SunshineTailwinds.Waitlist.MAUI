@@ -43,10 +43,10 @@ public class DatabaseService
             "10B",
             "16A",
             "16B",
-            "CTR24",
-            "CTR25",
-            "CTR26",
-            "CTR27",
+            "C24",
+            "C25",
+            "C26",
+            "C27",
             "TOGO",
             "GRUBHUB"
         });

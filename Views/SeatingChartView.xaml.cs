@@ -7,8 +7,12 @@ namespace SunshineTailwinds.Waitlist.MAUI.Views;
 public partial class SeatingChartView : ContentView
 {
     private readonly DatabaseService _database = new();
+
     public MainViewModel? ViewModel { get; set; }
+
     public MainPage? ParentPage { get; set; }
+
+    private bool _isInitialized;
 
     private const double DesignWidth = 850;
     private const double DesignHeight = 850;
@@ -24,7 +28,14 @@ public partial class SeatingChartView : ContentView
     object? sender,
     EventArgs e)
     {
-        RefreshChart();
+        if (!_isInitialized &&
+            Width > 0 &&
+            Height > 0)
+        {
+            _isInitialized = true;
+
+            RefreshChart();
+        }
     }
     public void RefreshChart()
     {
@@ -75,10 +86,10 @@ public partial class SeatingChartView : ContentView
         CreateTable("19", 320, 180);
 
         // CTR Stack
-        CreateTable("CTR24", 0, 300);
-        CreateTable("CTR25", 0, 370);
-        CreateTable("CTR26", 0, 440);
-        CreateTable("CTR27", 0, 510);
+        CreateTable("C24", 0, 300);
+        CreateTable("C25", 0, 370);
+        CreateTable("C26", 0, 440);
+        CreateTable("C27", 0, 510);
 
         // 1-4 Stack
         CreateTable("4", 220, 300);
