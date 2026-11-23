@@ -264,6 +264,7 @@ public class MainViewModel : INotifyPropertyChanged
             return;
 
         SelectedGuest.Status = "Closed";
+        SelectedGuest.TableNumber = "";
 
         _database.UpdateGuest(SelectedGuest);
 
