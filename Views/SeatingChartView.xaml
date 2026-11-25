@@ -20,9 +20,7 @@
                 FontAttributes="Bold"
                 Grid.Row="0" />
 
-            <ScrollView
-                Grid.Row="1"
-                Orientation="Both">
+            
 
                 <AbsoluteLayout
                      x:Name="ChartLayout"
@@ -31,9 +29,7 @@
 
                 </AbsoluteLayout>
 
-            </ScrollView>
-
-        </Grid>
+            </Grid>
 
     </Border>
 

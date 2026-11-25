@@ -13,6 +13,7 @@ public partial class SeatingChartView : ContentView
     public MainPage? ParentPage { get; set; }
 
     private bool _isInitialized;
+    private double _cachedScale = 1;
 
     private const double DesignWidth = 850;
     private const double DesignHeight = 850;
@@ -42,6 +43,13 @@ public partial class SeatingChartView : ContentView
         MainThread.BeginInvokeOnMainThread(() =>
         {
             ChartLayout.Children.Clear();
+
+            _cachedScale = Math.Min(
+                Width / DesignWidth,
+                Height / DesignHeight);
+
+            if (_cachedScale <= 0)
+                _cachedScale = 1;
 
             AddDemoTables();
         });
@@ -104,21 +112,8 @@ public partial class SeatingChartView : ContentView
     double x,
     double y)
     {
-        double scale = Math.Min(
-    ChartLayout.Width / DesignWidth,
-    ChartLayout.Height / DesignHeight);
+        double scale = _cachedScale;
 
-        if (scale <= 0)
-        {
-            scale = Width / DesignWidth;
-
-            if (scale <= 0)
-                scale = 1;
-        }
-        scale = Math.Min(scale, 1.0);
-        scale *= 1.0;
-        System.Diagnostics.Debug.WriteLine(
-        $"Scale = {scale}, Width = {ChartLayout.Width}, Height = {ChartLayout.Height}");
         var guests = _database.GetAllGuests();
 
         var guestAtTable =
@@ -127,6 +122,8 @@ public partial class SeatingChartView : ContentView
                 g.TableNumber.Trim().Equals(
                     tableNumber,
                     StringComparison.OrdinalIgnoreCase));
+
+        // rest of method unchanged...
 
         Color tableColor = Colors.LightGray;
 
